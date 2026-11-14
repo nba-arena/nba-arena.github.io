@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NBA ארנה | חידונים ומשחקי כדורסל</title>
+<meta name="description" content="אתר חידונים ומשחקים בנושא ה-NBA בעברית: חידון ענק, זיכרון, נחש את הסמל, אתגר קליעה, בנה חמישייה ועוד.">
+<style>
+:root{--bg:#0a0f1f;--card:#141b34;--card2:#1b2447;--line:#2a3566;--ac:#ff7a1a;--ac2:#ffb347;--good:#2ecc71;--bad:#ff4d5e;--txt:#eef1ff;--mut:#9aa6d6}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;background:radial-gradient(1200px 600px at 80% -10%,#26325f 0,transparent 60%),var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:rgba(10,15,31,.85);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
+.logo{font-size:1.5rem;font-weight:800;cursor:pointer;letter-spacing:.5px}
+.logo b{color:var(--ac)}
+.lv{cursor:pointer;min-width:150px}
+.lvTop{display:flex;justify-content:space-between;font-size:.8rem;color:var(--mut);margin-bottom:4px;gap:10px}
+.xpBar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden}
+.xpBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .5s}
+main{max-width:920px;margin:0 auto;padding:18px}
+.view{display:none}.view.active{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.85);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .35s}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.top h2{margin:0;font-size:1.6rem}
+.back{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px 14px;cursor:pointer;font-size:.95rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.center{text-align:center}
+.lead{font-size:1.1rem;margin-top:0}
+.muted{color:var(--mut);font-size:.9rem}
+.big{font-size:4rem}
+.row,.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+.btn{background:linear-gradient(#ff8a2b,#ff6a00);border:0;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;cursor:pointer;font-size:1rem;box-shadow:0 4px 0 #b84a00;transition:.1s;font-family:inherit}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #b84a00}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:var(--card2);box-shadow:0 4px 0 #0c1230;border:1px solid var(--line)}
+.btn.good{background:linear-gradient(#34d97b,#1fae5c);box-shadow:0 4px 0 #137a3f}
+.btn.bad{background:linear-gradient(#ff6070,#e5303f);box-shadow:0 4px 0 #9c1c27}
+.btn.small{padding:7px 14px;font-size:.85rem;margin-top:10px}
+.stats{display:flex;justify-content:space-between;gap:10px;color:var(--mut);margin-bottom:10px;font-weight:600}
+.q{font-size:1.35rem;margin:14px 0}
+.tbar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden}
+.tbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--good),var(--ac2),var(--bad));background-size:300% 100%;transition:width .1s linear}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{background:var(--card2);border:2px solid var(--line);color:var(--txt);padding:14px;border-radius:12px;font-size:1rem;cursor:pointer;font-family:inherit;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--ac);transform:translateY(-2px)}
+.opt.correct{background:var(--good);border-color:var(--good);color:#04210f}
+.opt.wrong{background:var(--bad);border-color:var(--bad);animation:shake .3s}
+.opt.gone{opacity:.2}
+.fb{min-height:28px;font-weight:700;margin-top:12px;font-size:1.1rem}
+.fb.ok{color:var(--good)}.fb.no{color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.gc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;cursor:pointer;transition:.2s;text-align:center}
+.gc:hover{transform:translateY(-5px);border-color:var(--ac);box-shadow:0 12px 30px rgba(255,122,26,.18)}
+.gc .ic{font-size:2.6rem}
+.gc h3{margin:6px 0 4px}
+.gc p{margin:0;color:var(--mut);font-size:.88rem}
+.hero{background:linear-gradient(135deg,#ff7a1a22,#3a4ea822);border:1px solid var(--line);border-radius:22px;padding:26px;margin-bottom:16px;text-align:center}
+.hero h1{margin:0 0 6px;font-size:2.2rem}
+.hero p{margin:0;color:var(--mut)}
+.fact{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.fact p{margin:0;font-size:1.05rem}
+.clues{list-style:none;padding:0;margin:10px 0}
+.clues li{background:var(--card2);border-radius:10px;padding:10px 14px;margin-bottom:8px;animation:pop .3s;border-right:4px solid var(--ac)}
+.hol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hc{background:var(--card2);border:2px solid var(--line);border-radius:16px;padding:22px 10px;text-align:center}
+.hc h3{margin:0 0 8px}
+.hc .v{font-size:2rem;font-weight:800;color:var(--ac2)}
+.hc.ok{border-color:var(--good)}.hc.no{border-color:var(--bad);animation:shake .3s}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mc{aspect-ratio:1/1;background:var(--card2);border:2px solid var(--line);border-radius:14px;font-size:1.8rem;cursor:pointer;color:var(--txt);font-family:inherit;font-weight:700;padding:4px;transition:.15s}
+.mc.open{background:var(--ac);border-color:var(--ac2);font-size:1rem}
+.mc.done{background:var(--good);border-color:var(--good);color:#04210f;font-size:1rem}
+.evs{display:grid;gap:10px}
+.ev{display:flex;align-items:center;gap:12px;background:var(--card2);border:2px solid var(--line);color:var(--txt);padding:14px;border-radius:12px;font-size:1rem;cursor:pointer;text-align:right;font-family:inherit}
+.ev .n{min-width:34px;height:34px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-weight:800;color:var(--ac2)}
+.ev.ok{border-color:var(--good)}.ev.no{border-color:var(--bad)}
+.ev .yr{margin-right:auto;font-weight:800;color:var(--ac2)}
+.word{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0;font-size:2rem;font-weight:800}
+.word span{width:38px;border-bottom:4px solid var(--ac);text-align:center;min-height:50px}
+.kb{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;direction:ltr}
+.kb button{width:40px;height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card2);color:var(--txt);font-weight:700;cursor:pointer}
+.kb button.hit{background:var(--good);color:#04210f}.kb button.miss{background:var(--bad);opacity:.6}
+.kb button:disabled{cursor:default}
+canvas{width:100%;height:auto;border-radius:14px;border:1px solid var(--line);display:block;cursor:pointer}
+.bar{position:relative;height:30px;background:#2a1010;border-radius:99px;overflow:hidden;margin:12px 0;border:1px solid var(--line)}
+.bar .z1{position:absolute;top:0;bottom:0;background:#c9a227}
+.bar .z2{position:absolute;top:0;bottom:0;background:var(--good)}
+.bar #mk{position:absolute;top:-2px;bottom:-2px;width:8px;margin-right:-4px;background:#fff;border-radius:4px;box-shadow:0 0 8px #fff;left:0}
+.msg{height:30px;text-align:center;font-weight:800;font-size:1.2rem;color:var(--ac2)}
+.pl{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.pc{background:var(--card2);border:2px solid var(--line);border-radius:14px;padding:14px;text-align:center;cursor:pointer;color:var(--txt);font-family:inherit;font-size:1rem}
+.pc:hover{border-color:var(--ac);transform:translateY(-3px)}
+.pc b{display:block;margin-bottom:6px}
+.rt{display:inline-block;background:var(--ac);color:#fff;border-radius:99px;padding:2px 12px;font-weight:800}
+table{width:100%;border-collapse:collapse;text-align:center}
+td,th{padding:8px;border-bottom:1px solid var(--line)}
+.ach{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.ac{background:var(--card2);border-radius:14px;padding:12px;text-align:center;border:1px solid var(--line)}
+.ac.lock{opacity:.35;filter:grayscale(1)}
+.ac .i{font-size:2rem}
+.ac small{color:var(--mut)}
+#toasts{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:50;align-items:center}
+.toast{background:#000d;border:1px solid var(--ac);padding:10px 18px;border-radius:99px;font-weight:700;animation:pop .3s}
+footer{text-align:center;color:var(--mut);font-size:.8rem;padding:24px 14px}
+.hl{display:flex;align-items:center;gap:12px}
+.menuBtn{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px 14px;cursor:pointer;font-size:1rem;font-family:inherit;font-weight:700}
+.menuBtn:hover{border-color:var(--ac)}
+.menu{position:absolute;top:100%;right:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;min-width:230px;padding:8px;display:none;box-shadow:0 14px 40px rgba(0,0,0,.5);z-index:30}
+.menu.open{display:block;animation:pop .2s}
+.menu button{display:block;width:100%;text-align:right;background:none;border:0;color:var(--txt);padding:12px 14px;border-radius:10px;cursor:pointer;font-size:1rem;font-family:inherit}
+.menu button:hover{background:var(--card2)}
+.in{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:1rem}
+.ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.ctl input{flex:1;min-width:160px}
+.tw{overflow-x:auto}
+table.st{min-width:680px}
+.st th{cursor:pointer;white-space:nowrap;color:var(--ac2);position:sticky;top:0;background:var(--card)}
+.st td:first-child,.st th:first-child{text-align:right}
+.st tr:hover td{background:rgba(255,255,255,.04)}
+.tag{background:var(--ac);color:#fff;border-radius:99px;padding:1px 8px;font-size:.7rem;margin-right:6px;white-space:nowrap}
+.cmpb{background:var(--card2);border:1px solid var(--line);border-radius:8px;cursor:pointer;padding:4px 8px;color:var(--txt)}
+.cmpb.on{background:var(--ac);border-color:var(--ac2)}
+.cr{display:grid;grid-template-columns:1fr 100px 1fr;gap:10px;align-items:center;margin:10px 0}
+.cr b{text-align:center;color:var(--mut);font-size:.85rem}
+.cv{font-weight:800;margin-bottom:3px}
+.cv.win{color:var(--good)}
+.cb{background:var(--card2);height:14px;border-radius:99px;overflow:hidden}
+.cb i{display:block;height:100%;background:var(--ac)}
+.cb.b i{background:#4da3ff}
+.cnames{display:grid;grid-template-columns:1fr 100px 1fr;gap:10px;text-align:center;font-weight:800;font-size:1.1rem}
+/* --- נחש את הקבוצה/השחקן --- */
+.gz{position:relative;width:260px;height:260px;margin:4px auto 14px;border-radius:18px;overflow:hidden;background:#fff;border:2px solid var(--line)}
+.gz .im{position:absolute;inset:0;display:grid;place-items:center;padding:14px}
+.gz .im img{max-width:100%;max-height:100%;display:block}
+.gz.ph .im{padding:0}
+.gz.ph .im img{width:100%;height:100%;object-fit:cover;max-width:none;max-height:none}
+.gzMask{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr)}
+.gzMask i{background:#141b34;outline:1px solid #0a0f1f;transition:opacity .35s,transform .35s}
+.gzMask i.off{opacity:0;transform:scale(.4);pointer-events:none}
+.gzKind{display:inline-block;background:var(--card2);border:1px solid var(--line);border-radius:99px;padding:3px 14px;font-size:.85rem;color:var(--ac2);font-weight:700}
+@media(max-width:560px){.opts,.hol{grid-template-columns:1fr}.hero h1{font-size:1.7rem}.mem{gap:6px}.lv{min-width:110px}.logo{font-size:1.2rem}.menuBtn{padding:7px 10px}.cr,.cnames{grid-template-columns:1fr 64px 1fr}.gz{width:220px;height:220px}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hl">
+    <button class="menuBtn" onclick="toggleMenu(event)" aria-label="תפריט">☰ תפריט</button>
+    <div class="logo" onclick="go('home')">🏀 NBA <b>ארנה</b></div>
+  </div>
+  <div class="lv" onclick="go('profile')" title="הפרופיל שלי">
+    <div class="lvTop"><span id="lvl"></span><span id="xpTxt"></span></div>
+    <div class="xpBar"><i id="xpFill"></i></div>
+  </div>
+  <nav class="menu" id="menu">
+    <button onclick="go('home')">🏠 בית</button>
+    <button onclick="go('stats')">📊 טבלאות סטטיסטיקה</button>
+    <button onclick="go('profile')">🏅 הפרופיל שלי</button>
+    <button onclick="go('about')">ℹ️ אודות</button>
+  </nav>
+</header>
+<main id="app"></main>
+<div id="toasts"></div>
+<footer>אתר מעריצים לא רשמי, ללא קשר ל-NBA או לקבוצות. הסמלים והתמונות הם רכושם של בעליהם ומוצגים כאן לצורך שעשוע ולמידה בלבד. הדירוגים והנתונים עשויים להיות לא מדויקים לגמרי.</footer>
+
+<script>
+"use strict";
+/* ============ כלים כלליים ============ */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const rnd=(a,b)=>Math.random()*(b-a)+a;
+const ri=n=>Math.floor(Math.random()*n);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=ri(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const pick=(a,n)=>shuffle(a).slice(0,n);
+
+/* ============ שמירה והישגים ============ */
+const KEY="nba_arena_v1";
+let save={xp:0,best:{},ach:{},plays:0};
+try{const s=localStorage.getItem(KEY);if(s){save={...save,...JSON.parse(s)};}}catch(e){}
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}};
+const TITLES=["טירון","שחקן ספסל","שחקן רוטציה","פותח בחמישייה","אול-סטאר","MVP","אגדה","היכל התהילה"];
+const lvl=()=>Math.floor(save.xp/150)+1;
+const ACH=[
+ {id:"first",i:"🏀",n:"צעד ראשון",d:"סיימו משחק אחד"},
+ {id:"plays10",i:"🎮",n:"מכורים",d:"שחקו 10 משחקים"},
+ {id:"trivia_perfect",i:"🧠",n:"גאון NBA",d:"10 מתוך 10 בחידון"},
+ {id:"trivia_streak",i:"🔥",n:"רצף לוהט",d:"8 נכונות ברצף בחידון"},
+ {id:"tf15",i:"⚡",n:"מהיר כברק",d:"15 נכון/לא נכון בסיבוב"},
+ {id:"who_ace",i:"🕵️",n:"בלש",d:"נחשו שחקן ברמז הראשון"},
+ {id:"eagle",i:"🔍",n:"עין נשר",d:"זיהו סמל בלי לחשוף אף ריבוע"},
+ {id:"logo8",i:"🧿",n:"מזהה סמלים",d:"8 זיהויים נכונים ברצף"},
+ {id:"hol10",i:"📈",n:"עין חדה",d:"רצף 10 בגבוה/נמוך"},
+ {id:"mem14",i:"🧩",n:"זיכרון פיל",d:"זיכרון ב-14 מהלכים או פחות"},
+ {id:"swish",i:"🎯",n:"שווש מושלם",d:"10 מתוך 10 מהעונשין"},
+ {id:"deep",i:"🚀",n:"מעבר לקשת",d:"18 נקודות ומעלה במשחק הקשת"},
+ {id:"time16",i:"⏳",n:"מכונת זמן",d:"16 נקודות בציר הזמן"},
+ {id:"hang5",i:"🔤",n:"מלך המילים",d:"5 מילים ברצף בתלייה"},
+ {id:"draft_win",i:"👑",n:"מאמן השנה",d:"נצחו בבנה חמישייה"},
+ {id:"lvl5",i:"⭐",n:"אול-סטאר",d:"הגיעו לדרגה 5"}
+];
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;$("#toasts").appendChild(t);setTimeout(()=>t.remove(),2600);}
+function renderHeader(){const l=lvl();$("#lvl").textContent="דרגה "+l+" · "+TITLES[Math.min(TITLES.length-1,l-1)];$("#xpTxt").textContent=save.xp+" XP";$("#xpFill").style.width=((save.xp%150)/150*100)+"%";}
+function unlock(id){if(save.ach[id])return;save.ach[id]=1;persist();const a=ACH.find(x=>x.id===id);toast("🏆 הישג חדש: "+a.n);}
+function addXP(n){if(n<=0)return;save.xp+=n;persist();renderHeader();toast("+"+n+" XP");if(lvl()>=5)unlock("lvl5");}
+function setBest(k,v,low){const o=save.best[k];if(o===undefined||(low?v<o:v>o)){save.best[k]=v;persist();return true;}return false;}
+function finish(xp){save.plays++;unlock("first");if(save.plays>=10)unlock("plays10");persist();addXP(xp);}
+function resultHTML(e,t,lines,btns){return `<div class="card center pop"><div class="big">${e}</div><h3>${t}</h3>${lines.map(l=>`<p>${l}</p>`).join("")}<div class="row">${btns}</div></div>`;}
+
+/* ============ מאגרי נתונים ============ */
+/* חידון: [קטגוריה, שאלה, [תשובות], אינדקס נכון] */
+const TRIVIA=[
+["hist","באיזו שנה נוסדה ליגת ה-BAA שהתמזגה והפכה ל-NBA?",["1946","1925","1960","1972"],0],
+["hist","איזו קבוצה קנדית זכתה באליפות ה-NBA ב-2019?",["ונקובר גריזליז","טורונטו ראפטורס","מונטריאול","אוטווה"],1],
+["hist","באיזו עיר זכתה ה-Dream Team האמריקאית בזהב אולימפי ב-1992?",["אטלנטה","סידני","ברצלונה","סיאול"],2],
+["hist","איזו קבוצה זכתה באליפות ה-NBA ב-2023?",["דנבר נאגטס","מיאמי היט","בוסטון סלטיקס","גולדן סטייט"],0],
+["hist","איזו קבוצה ניצחה בגמר ה-NBA של 2024?",["דאלאס מאבריקס","בוסטון סלטיקס","מינסוטה","אינדיאנה"],1],
+["hist","איזו קבוצה חזרה מ-1:3 בגמר 2016 וניצחה את גולדן סטייט?",["קליבלנד קאבלירס","סן אנטוניו","אוקלהומה סיטי","יוסטון"],0],
+["hist","איזו קבוצה סיימה את העונה הסדירה 2015-16 עם שיא של 73 ניצחונות?",["שיקגו בולס","גולדן סטייט ווריורס","לוס אנג'לס לייקרס","מיאמי היט"],1],
+["hist","איפה נערכה ה״בועה״ של ה-NBA בעונת 2020?",["אורלנדו (דיסני וורלד)","לאס וגאס","מיאמי","דאלאס"],0],
+["hist","מי נבחר ראשון בדראפט 2003?",["קרמלו אנתוני","לברון ג'יימס","דוויין וויד","כריס בוש"],1],
+["hist","מי נבחר ראשון בדראפט 2023?",["ויקטור וומבניאמה","סקוטי בארנס","בראנדון מילר","צ'ט הולמגרן"],0],
+["hist","באיזה מקום נבחר מייקל ג'ורדן בדראפט 1984?",["ראשון","שלישי","שביעי","עשירי"],1],
+["hist","על איזו קבוצה עוסקת הסדרה התיעודית The Last Dance?",["שיקגו בולס","לוס אנג'לס לייקרס","דטרויט פיסטונס","יוטה ג'אז"],0],
+["play","איזה שחקן ידוע בכינוי “מאמבה השחורה”?",["קובי בראיינט","קווין דוראנט","טרייסי מקגריידי","וינס קרטר"],0],
+["play","איזה שחקן ידוע בכינוי “Greek Freak”?",["לוקה דונצ'יץ'","יאניס אנטטוקומבו","ניקולה יוקיץ'","ג'ואל אמביד"],1],
+["play","איזה שחקן נקרא “The Answer”?",["אלן איברסון","ג'ייסון קיד","סטיב נאש","גארי פייטון"],0],
+["play","איזה שחקן נקרא “The Big Fundamental”?",["טים דאנקן","דיוויד רובינסון","קווין גארנט","פאו גאסול"],0],
+["play","איזה שחקן שיחק בלייקרס, מיאמי, פיניקס, קליבלנד ובוסטון?",["שאקיל או'ניל","קארל מאלון","כריס בוש","קווין לאב"],0],
+["play","מאיזו מדינה בא דירק נוביצקי?",["גרמניה","שוויץ","אוסטריה","הולנד"],0],
+["play","מאיזו מדינה בא ניקולה יוקיץ'?",["סרביה","קרואטיה","סלובניה","ליטא"],0],
+["play","מאיזו מדינה בא לוקה דונצ'יץ'?",["סרביה","סלובניה","ספרד","צרפת"],1],
+["play","מאיזו מדינה בא ויקטור וומבניאמה?",["קמרון","צרפת","סנגל","בלגיה"],1],
+["play","מי נבחר ל-MVP פה אחד ב-2016 (הראשון בהיסטוריה)?",["לברון ג'יימס","סטף קרי","קווין דוראנט","ראסל ווסטברוק"],1],
+["play","מי מחזיק בשיא השלשות בקריירה בכל הזמנים?",["ריי אלן","סטף קרי","רג'י מילר","קלי תומפסון"],1],
+["play","איזה שחקן נקרא “The Mailman”?",["קארל מאלון","ג'ון סטוקטון","צ'ארלס ברקלי","פטריק יואינג"],0],
+["play","מי היה הראשון שסיים עונה שלמה עם ממוצע טריפל-דאבל?",["אוסקר רוברטסון","מג'יק ג'ונסון","ג'ייסון קיד","לארי בירד"],0],
+["play","איזו זריקה מזוהה עם קארים עבדול-ג'אבר?",["סקייהוק","פאדאווי","פינגר רול","דאנק"],0],
+["play","מה היה שמו המקורי של קארים עבדול-ג'אבר?",["לו אלסינדור","לארי קינג","מרווין ג'ונסון","קארל ג'ונס"],0],
+["play","איזה שני מספרים לבש קובי בראיינט בקריירה?",["8 ו-24","23 ו-45","10 ו-33","1 ו-12"],0],
+["play","כמה אליפויות זכה מייקל ג'ורדן עם שיקגו בולס?",["4","5","6","7"],2],
+["play","איזו קבוצה שיחק לארי בירד כל הקריירה?",["בוסטון סלטיקס","לוס אנג'לס לייקרס","אינדיאנה פייסרס","פילדלפיה 76"],0],
+["play","מי נחשב ל״קסם״ רכז עם 5 אליפויות בלייקרס?",["מג'יק ג'ונסון","אייזיה תומאס","סטיב נאש","גארי פייטון"],0],
+["play","על שם מי נקרא פרס ה-MVP של סדרת הגמר?",["ביל ראסל","מג'יק ג'ונסון","קארים עבדול-ג'אבר","מייקל ג'ורדן"],0],
+["team","איזו קבוצה משחקת במדיסון סקוור גארדן?",["ברוקלין נטס","ניו יורק ניקס","בוסטון סלטיקס","פילדלפיה 76"],1],
+["team","איזו קבוצה הייתה פעם בסיאטל בשם סופרסוניקס?",["אוקלהומה סיטי ת'אנדר","יוטה ג'אז","פורטלנד","סקרמנטו קינגס"],0],
+["team","מאיפה הגיעו הלייקרס לפני שעברו ללוס אנג'לס (ולכן נקראים “אגמים”)?",["מיניאפוליס","דטרויט","שיקגו","בולטימור"],0],
+["team","איזו קבוצה היא הקבוצה מאורלנדו?",["אורלנדו מג'יק","מיאמי היט","אטלנטה הוקס","שארלוט הורנטס"],0],
+["team","מאיזו עיר שיקגו בולס?",["ניו יורק","שיקגו","דטרויט","מילווקי"],1],
+["team","איזו קבוצה מזוהה עם צבעי סגול וזהב ולוס אנג'לס?",["לוס אנג'לס לייקרס","פורטלנד","דנבר","אורלנדו"],0],
+["team","בבוסטון משחקת קבוצה בצבע ירוק. איך קוראים לה?",["סלטיקס","בולס","ספרס","הוקס"],0],
+["team","כמה קבוצות יש ב-NBA?",["28","30","32","24"],1],
+["rec","כמה נקודות קלע ווילט צ'מברלין במשחק אחד ב-1962?",["81","100","73","90"],1],
+["rec","כמה נקודות קלע קובי בראיינט במשחק שלו ב-2006?",["81","62","100","73"],0],
+["rec","נגד איזו קבוצה קלע קובי 81 נקודות?",["טורונטו ראפטורס","דאלאס מאבריקס","ניו יורק ניקס","שיקגו בולס"],0],
+["rec","מי ממוצע 50.4 נקודות למשחק בעונה אחת?",["ווילט צ'מברלין","מייקל ג'ורדן","קובי בראיינט","ג'ורג' גרווין"],0],
+["rec","כמה ניצחונות השיגו הבולס בעונת 1995-96?",["72","68","65","70"],0],
+["rec","מי עקף ב-2023 את קארים עבדול-ג'אבר ונהיה מלך הקליעה בכל הזמנים?",["לברון ג'יימס","קארל מאלון","מייקל ג'ורדן","קובי בראיינט"],0],
+["rec","מי זכה בהכי הרבה אליפויות כשחקן?",["ביל ראסל","מייקל ג'ורדן","קארים עבדול-ג'אבר","רוברט הורי"],0],
+["rec","כמה אליפויות זכה ביל ראסל?",["9","10","11","12"],2],
+["rule","כמה שחקנים מכל קבוצה נמצאים על המגרש בו-זמנית?",["4","5","6","7"],1],
+["rule","כמה נקודות שווה קליעה מעבר לקשת?",["2","3","4","1"],1],
+["rule","כמה זמן נמשך רבע ב-NBA?",["10 דקות","12 דקות","15 דקות","8 דקות"],1],
+["rule","אחרי כמה עבירות אישיות שחקן NBA יוצא מהמשחק?",["5","6","7","4"],1],
+["rule","כמה שניות יש להתקפה כדי לזרוק לסל?",["20","24","30","14"],1],
+["rule","מה גובה הטבעת מהרצפה?",["2.75 מטר","3.05 מטר","3.35 מטר","2.5 מטר"],1],
+["rule","מהו טריפל-דאבל?",["דאבל-ספרתי בשלוש קטגוריות סטטיסטיות","שלושה סלים ברצף","שלוש עבירות","שלוש חטיפות"],0],
+["rule","איך נקרא גביע האליפות של ה-NBA?",["גביע לארי או'בריאן","גביע ווילט","גביע ג'ורדן","גביע סטרן"],0],
+["isr","מי היה הישראלי הראשון ששיחק ב-NBA?",["אומרי כספי","דני אבדיה","ליאור אליהו","גל מקל"],0],
+["isr","איזו קבוצה בחרה בדני אבדיה בדראפט 2020?",["וושינגטון וויזארדס","פורטלנד","שיקגו בולס","ניו יורק ניקס"],0],
+["isr","באיזה מקום נבחר דני אבדיה בדראפט 2020?",["9","1","15","23"],0],
+["isr","באיזה מקום נבחר אומרי כספי בדראפט 2009?",["23","9","1","30"],0],
+["isr","באיזו קבוצה שיחק אומרי כספי בעונה הראשונה שלו ב-NBA?",["סקרמנטו קינגס","לוס אנג'לס לייקרס","בוסטון סלטיקס","ניו יורק ניקס"],0]
+];
+/* נכון / לא נכון */
+const TFQ=[
+["מייקל ג'ורדן הפסיד בגמר ה-NBA",false],["קובי בראיינט שיחק את כל הקריירה בלייקרס",true],["יש 32 קבוצות ב-NBA",false],
+["קליעה מקו העונשין שווה נקודה אחת",true],["מותר ללכת עם הכדור בלי לדרבל",false],["טורונטו ראפטורס זכתה באליפות ב-2019",true],
+["וילט צ'מברלין קלע 100 נקודות במשחק אחד",true],["מייקל ג'ורדן נבחר ראשון בדראפט 1984",false],["לברון ג'יימס נבחר ראשון בדראפט 2003",true],
+["שאקיל או'ניל שיחק בגולדן סטייט ווריורס",false],["הקליעה לשלוש נקודות נכנסה ל-NBA בשנת 1979",true],["להתקפה יש 24 שניות לזרוק",true],
+["ה-Dream Team זכתה בזהב אולימפי ב-1992",true],["אומרי כספי היה הישראלי הראשון ב-NBA",true],["סטף קרי נבחר MVP פה אחד ב-2016",true],
+["בוסטון סלטיקס היא אחת הקבוצות עם הכי הרבה אליפויות",true],["רבע ב-NBA נמשך 10 דקות",false],["שחקן יכול לצבור 8 עבירות אישיות לפני שיוצא",false],
+["דני אבדיה נבחר בדראפט 2020 במקום התשיעי",true],["ויקטור וומבניאמה נבחר ראשון בדראפט 2023",true],["הטבעת נמצאת בגובה 2.5 מטר",false],
+["מג'יק ג'ונסון שיחק בלייקרס",true],["לארי בירד שיחק בשיקגו בולס",false],["ניקולה יוקיץ' בא מסרביה",true],
+["הבולס של 1995-96 ניצחו 72 משחקים בעונה הסדירה",true],["קארים עבדול-ג'אבר נולד בשם לו אלסינדור",true],["ביל ראסל זכה ב-11 אליפויות",true],
+["לוקה דונצ'יץ' בא מספרד",false],["דירק נוביצקי שיחק כל הקריירה בדאלאס",true],["בכל קבוצה יש 7 שחקנים על המגרש",false],
+["ל-NBA יש משחק אולסטאר מדי עונה",true],["ווילט צ'מברלין היה ממוצע 50 נקודות בעונה אחת",true],["כדורסל הומצא ב-1891",true],
+["הגביע של האליפות נקרא על שם לארי או'בריאן",true],["לייקרס היו פעם בסיאטל",false],["הסופרסוניקס היו פעם בסיאטל",true]
+];
+/* מי זה השחקן: רמזים מהקשה לקל */
+const WHO=[
+{n:"מייקל ג'ורדן",c:["נולדתי בברוקלין אבל גדלתי בצפון קרולינה","נבחרתי שלישי בדראפט 1984","לבשתי בעיקר את מספר 23","זכיתי ב-6 אליפויות וב-6 תארי MVP של הגמר","כיכבתי בשיקגו בולס ובסרט עם דמויות קריקטורה"]},
+{n:"קובי בראיינט",c:["נבחרתי בדראפט 1996 ישר מהתיכון","נבחרתי ע״י שארלוט ונסחרתי ללייקרס","קלעתי 81 נקודות במשחק אחד","לבשתי את המספרים 8 ו-24","הכינוי שלי: מאמבה השחורה"]},
+{n:"לברון ג'יימס",c:["נבחרתי ראשון בדראפט 2003 ישר מהתיכון באוהיו","זכיתי באליפות עם שלוש קבוצות שונות","ב-2016 חזרתי מ-1:3 בגמר מול גולדן סטייט","ב-2023 עקפתי את קארים והפכתי למלך הקליעה","הכינוי שלי: המלך"]},
+{n:"סטף קרי",c:["אבא שלי, דל, שיחק גם הוא ב-NBA","נבחרתי במקום השביעי בדראפט 2009","אני מחזיק בשיא השלשות בכל הזמנים","ב-2016 נבחרתי ל-MVP פה אחד","אני משחק בגולדן סטייט ווריורס"]},
+{n:"שאקיל או'ניל",c:["נבחרתי ראשון בדראפט 1992 ע״י אורלנדו","שיחקתי בלייקרס, מיאמי, פיניקס, קליבלנד ובוסטון","גובה 2.16 מטר ומעל 140 ק״ג","זכיתי ב-4 אליפויות","קוראים לי שאק"]},
+{n:"מג'יק ג'ונסון",c:["נבחרתי ראשון בדראפט 1979","רכז בגובה 2.06 מטר","היריבות שלי עם לארי בירד הגדירה את שנות ה-80","זכיתי ב-5 אליפויות עם הלייקרס","הכינוי שלי הוא קסם"]},
+{n:"לארי בירד",c:["למדתי באוניברסיטת אינדיאנה סטייט","שיחקתי כל הקריירה בבוסטון","שלוש פעמים MVP ברצף ב-1984-86","יריבות אגדית עם מג'יק ג'ונסון","שלוש אליפויות עם הסלטיקס"]},
+{n:"טים דאנקן",c:["נולדתי באיי הבתולה האמריקאיים והייתי שחיין","נבחרתי ראשון בדראפט 1997","שיחקתי כל הקריירה בסן אנטוניו","זכיתי ב-5 אליפויות עם הספרס","הכינוי שלי: The Big Fundamental"]},
+{n:"דירק נוביצקי",c:["נולדתי בגרמניה","שיחקתי כל הקריירה בדאלאס","זכיתי באליפות ב-2011 מול מיאמי","הזריקה המפורסמת שלי: פאדאווי על רגל אחת","גובה 2.13 מטר"]},
+{n:"יאניס אנטטוקומבו",c:["נולדתי באתונה להורים ממוצא ניגרי","בגיל 18 הגעתי ל-NBA מליגה נמוכה","MVP ב-2019 וב-2020","אליפות ב-2021 עם מילווקי","הכינוי שלי: Greek Freak"]},
+{n:"ניקולה יוקיץ'",c:["נולדתי בסומבור שבסרביה","נבחרתי במקום ה-41 בדראפט 2014","אני משחק בדנבר נאגטס","זכיתי באליפות 2023 וב-3 תארי MVP","הכינוי שלי: הג'וקר"]},
+{n:"קארים עבדול-ג'אבר",c:["נולדתי בשם לואיס אלסינדור","שיחקתי 20 עונות ב-NBA","זכיתי ב-6 אליפויות ו-6 תארי MVP","הזריקה המפורסמת שלי נקראת סקייהוק","הייתי מלך הקליעה עד 2023"]},
+{n:"אלן איברסון",c:["נבחרתי ראשון בדראפט 1996","בגובה 1.83 קלעתי מול ענקים","שיחקתי בפילדלפיה 76","זכיתי ב-MVP ב-2001","הכינוי שלי: The Answer"]},
+{n:"דוויין וויד",c:["נבחרתי חמישי בדראפט 2003","שיחקתי הכי הרבה שנים במיאמי","זכיתי ב-3 אליפויות","הייתי MVP הגמר ב-2006","הכינוי שלי: Flash"]},
+{n:"האקים אולג'ואון",c:["נולדתי בניגריה","שיחקתי ביוסטון רוקטס","נבחרתי ראשון בדראפט 1984, לפני ג'ורדן","זכיתי באליפויות ב-1994 וב-1995","התנועה המפורסמת שלי: Dream Shake"]},
+{n:"וילט צ'מברלין",c:["קראו לי “וילט הענק”","קלעתי 100 נקודות במשחק אחד","ממוצע 50.4 נקודות בעונה אחת","גובה 2.16 מטר","שיחקתי בפילדלפיה ובלייקרס"]},
+{n:"ביל ראסל",c:["שיחקתי בבוסטון סלטיקס","פרס MVP הגמר נקרא על שמי","הייתי מגן אגדי וחוסם קליעות","זכיתי ב-11 אליפויות ב-13 עונות","אין שחקן עם יותר טבעות ממני"]}
+];
+/* גבוה או נמוך */
+const HOL_PTS=[["קארים עבדול-ג'אבר",38387],["קארל מאלון",36928],["קובי בראיינט",33643],["מייקל ג'ורדן",32292],["דירק נוביצקי",31560],["וילט צ'מברלין",31419],["שאקיל או'ניל",28596],["מוזס מלון",27409],["אלווין הייז",27313],["האקים אולג'ואון",26946],["אוסקר רוברטסון",26710],["טים דאנקן",26496],["קווין גארנט",26071],["פול פירס",26397],["דומיניק ווילקינס",26668],["רג'י מילר",25279],["פטריק יואינג",24815],["אלן איברסון",24368],["צ'ארלס ברקלי",23757],["דוויין וויד",23165],["לארי בירד",21791],["דיוויד רובינסון",20790],["סקוטי פיפן",18940],["מג'יק ג'ונסון",17707]];
+const HOL_TITLES=[["ביל ראסל",11],["סאם ג'ונס",10],["רוברט הורי",7],["קארים עבדול-ג'אבר",6],["מייקל ג'ורדן",6],["סקוטי פיפן",6],["קובי בראיינט",5],["טים דאנקן",5],["מג'יק ג'ונסון",5],["דניס רודמן",5],["שאקיל או'ניל",4],["טוני פארקר",4],["מאנו ג'ינובילי",4],["לארי בירד",3],["דוויין וויד",3],["האקים אולג'ואון",2],["דיוויד רובינסון",2],["אייזיה תומאס",2],["דירק נוביצקי",1],["קווין גארנט",1],["פול פירס",1],["אלן איברסון",0],["צ'ארלס ברקלי",0],["קארל מאלון",0],["פטריק יואינג",0]];
+const HOL_MVP=[["קארים עבדול-ג'אבר",6],["מייקל ג'ורדן",5],["ביל ראסל",5],["וילט צ'מברלין",4],["מג'יק ג'ונסון",3],["לארי בירד",3],["מוזס מלון",3],["טים דאנקן",2],["סטיב נאש",2],["קארל מאלון",2],["קובי בראיינט",1],["שאקיל או'ניל",1],["אלן איברסון",1],["קווין גארנט",1],["צ'ארלס ברקלי",1],["דירק נוביצקי",1],["האקים אולג'ואון",1],["דיוויד רובינסון",1],["ג'וליוס ארווינג",1],["רג'י מילר",0],["ג'ון סטוקטון",0],["פטריק יואינג",0],["סקוטי פיפן",0]];
+/* זיכרון */
+const PAIRS=[["ניו יורק","ניקס"],["לוס אנג'לס","לייקרס"],["שיקגו","בולס"],["בוסטון","סלטיקס"],["גולדן סטייט","ווריורס"],["מיאמי","היט"],["סן אנטוניו","ספרס"],["דנבר","נאגטס"],["דאלאס","מאבריקס"],["טורונטו","ראפטורס"],["פילדלפיה","סבנטי סיקסרס"],["מילווקי","באקס"],["אורלנדו","מג'יק"],["יוטה","ג'אז"]];
+/* ציר זמן */
+const TLE=[[1946,"נוסדה ליגת ה-BAA, אבי ה-NBA"],[1962,"וילט צ'מברלין קולע 100 נקודות במשחק"],[1979,"הקליעה לשלוש נקודות נכנסת ל-NBA"],[1980,"מג'יק ג'ונסון, טירון, מוביל את הלייקרס לאליפות"],[1984,"מייקל ג'ורדן נבחר בדראפט"],[1992,"ה-Dream Team זוכה בזהב בברצלונה"],[1995,"ג'ורדן חוזר מהבייסבול ל-NBA"],[1996,"קובי בראיינט נבחר בדראפט"],[2003,"לברון ג'יימס נבחר ראשון בדראפט"],[2006,"קובי קולע 81 נקודות"],[2009,"אומרי כספי נבחר בדראפט"],[2011,"דאלאס של נוביצקי זוכה באליפות"],[2016,"קליבלנד חוזרת מ-1:3 וזוכה באליפות"],[2019,"טורונטו זוכה באליפות הראשונה שלה"],[2020,"דני אבדיה נבחר בדראפט"],[2023,"לברון עוקף את קארים כמלך הקליעה"],[2024,"בוסטון זוכה באליפות מול דאלאס"]];
+/* תלייה */
+const WORDS=[["JORDAN","האגדה של שיקגו, מספר 23"],["BRYANT","מאמבה, לייקרס, 8 ו-24"],["CURRY","מלך השלשות של גולדן סטייט"],["NOWITZKI","האגדה הגרמנית מדאלאס"],["JOKIC","הסרבי מדנבר"],["DONCIC","הכוכב הסלובני"],["WEMBANYAMA","הצרפתי הענק מסן אנטוניו"],["OLAJUWON","ה-Dream של יוסטון"],["CHAMBERLAIN","קלע 100 נקודות במשחק"],["IVERSON","The Answer מפילדלפיה"],["DUNCAN","היסודי של הספרס"],["GARNETT","ה-Big Ticket"],["PIPPEN","סקוטי, עוזרו של ג'ורדן"],["RODMAN","מלך הריבאונדים עם שיער צבעוני"],["STOCKTON","רכז יוטה, מלך הפאסים"],["EWING","האגדה של הניקס"],["BARKLEY","סר צ'ארלס"],["AVDIJA","הישראלי שנבחר 9 ב-2020"],["CASSPI","הישראלי הראשון ב-NBA"],["ANTETOKOUNMPO","ה-Greek Freak"],["HARDEN","הזקן, The Beard"],["DURANT","KD, שתי אליפויות עם גולדן סטייט"],["RUSSELL","11 אליפויות עם בוסטון"],["MALONE","הדוור מיוטה"],["LAKERS","סגול וזהב מלוס אנג'לס"],["CELTICS","ירוק מבוסטון"],["BULLS","השוורים משיקגו"],["KNICKS","קבוצת מדיסון סקוור גארדן"],["RAPTORS","אליפות 2019 מקנדה"],["SPURS","קבוצת סן אנטוניו"],["WARRIORS","הקבוצה של סטף קרי"],["NUGGETS","הקבוצה של יוקיץ'"]];
+/* בנה חמישייה */
+const POS=[["PG","רכז"],["SG","גארד קלע"],["SF","פורוורד קטן"],["PF","פורוורד כבד"],["C","סנטר"]];
+const POOL={
+PG:[["מג'יק ג'ונסון",97],["סטף קרי",96],["אוסקר רוברטסון",93],["ג'ון סטוקטון",90],["אלן איברסון",90],["סטיב נאש",89],["אייזיה תומאס",88],["ג'ייסון קיד",88],["גארי פייטון",87],["טוני פארקר",84]],
+SG:[["מייקל ג'ורדן",99],["קובי בראיינט",96],["דוויין וויד",92],["ג'יימס הארדן",91],["קלייד דרקסלר",88],["מאנו ג'ינובילי",87],["ריי אלן",86],["רג'י מילר",85],["וינס קרטר",85],["קלי תומפסון",84]],
+SF:[["לברון ג'יימס",98],["לארי בירד",96],["קווין דוראנט",95],["ג'וליוס ארווינג",93],["קוואי לנארד",92],["סקוטי פיפן",91],["פול פירס",88],["ג'ון האבליצ'ק",88],["קרמלו אנתוני",87],["דומיניק ווילקינס",86]],
+PF:[["טים דאנקן",96],["יאניס אנטטוקומבו",95],["דירק נוביצקי",93],["קארל מאלון",92],["קווין גארנט",92],["צ'ארלס ברקלי",90],["קווין מקהייל",88],["כריס וובר",86],["דניס רודמן",85],["פאו גאסול",85]],
+C:[["קארים עבדול-ג'אבר",97],["ניקולה יוקיץ'",97],["שאקיל או'ניל",96],["וילט צ'מברלין",96],["ביל ראסל",95],["האקים אולג'ואון",95],["דיוויד רובינסון",91],["מוזס מלון",90],["פטריק יואינג",88],["יאו מינג",84]]
+};
+const OPPS=[["Dream Team 1992",97],["הבולס של 1996",95],["הלייקרס של 2001",92],["הסלטיקס של 1986",93],["הווריורס של 2016",92],["הספרס של 2014",88],["הפיסטונס של 2004",86],["ההיט של 2013",90],["הבאקס של 1971",87],["הסלטיקס של 1965",88],["הלייקרס של 1987",91],["הניקס של 1973",84]];
+
+/* ============ נחש את הקבוצה/השחקן: מאגר תמונות ============ */
+const GUESS_TEAMS=[
+["שיקגו בולס","https://thumb.wikimedia.org/wikipedia/he/thumb/6/67/Chicago_Bulls_logo.svg/1280px-Chicago_Bulls_logo.svg.png"],
+["לוס אנג'לס לייקרס","https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Los_Angeles_Lakers_logo.svg/1280px-Los_Angeles_Lakers_logo.svg.png"],
+["בוסטון סלטיקס","https://thumb.wikimedia.org/wikipedia/he/thumb/8/8f/Boston_Celtics.svg/500px-Boston_Celtics.svg.png"],
+["טורונטו ראפטורס","https://thumb.wikimedia.org/wikipedia/he/thumb/3/36/Toronto_Raptors_logo.svg/500px-Toronto_Raptors_logo.svg.png"],
+["סן אנטוניו ספרס","https://orangeball.co.il/wp-content/uploads/2020/12/NBA_Logos_27.png"],
+["מיאמי היט","https://upload.wikimedia.org/wikipedia/he/c/c9/Miami_Heat_logo.svg.png"],
+["דנבר נאגטס","https://thumb.wikimedia.org/wikipedia/he/thumb/d/d9/Denver_Nuggets_Logo.svg/500px-Denver_Nuggets_Logo.svg.png"],
+["גולדן סטייט ווריורס","https://thumb.wikimedia.org/wikipedia/he/thumb/6/66/Golden_State_Warriors_2019.png/500px-Golden_State_Warriors_2019.png"],
+["ניו יורק ניקס","https://thumb.wikimedia.org/wikipedia/he/thumb/2/25/New_York_Knicks_logo.svg/500px-New_York_Knicks_logo.svg.png"],
+["דאלאס מאבריקס","https://thumb.wikimedia.org/wikipedia/he/thumb/d/da/Dallas_Mavericks.svg/500px-Dallas_Mavericks.svg.png"],
+["יוסטון רוקטס","https://upload.wikimedia.org/wikipedia/he/c/cb/Houston_Rockets_2019.png"],
+["אוקלהומה סיטי ת'אנדר","https://thumb.wikimedia.org/wikipedia/he/thumb/5/5d/Oklahoma_City_Thunder.svg/500px-Oklahoma_City_Thunder.svg.png"]
+];
+const GUESS_PLAYERS=[
+["מייקל ג'ורדן","https://ynet-pic1.yit.co.il/PicServer5/2020/04/23/9927479/992747501000100980666no.jpg"],
+["לברון ג'יימס","https://upload.wikimedia.org/wikipedia/commons/c/c4/LeBron_James%2C_25_November_2023_02_%28cropped%29.jpg"],
+["קובי בראיינט","https://upload.wikimedia.org/wikipedia/commons/8/82/Kobe_Bryant_2015.jpg"],
+["שאקיל או'ניל","https://upload.wikimedia.org/wikipedia/commons/6/65/Lipofsky_Shaquille_O%27Neal.jpg"],
+["סטף קרי","https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Stephen_Curry_dribbling_2016_%28cropped%29.jpg/500px-Stephen_Curry_dribbling_2016_%28cropped%29.jpg"],
+["מג'יק ג'ונסון","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Vintage_Lakers_Layup_Under_Pressure.png/500px-Vintage_Lakers_Layup_Under_Pressure.png"],
+["קארים עבדול-ג'אבר","https://upload.wikimedia.org/wikipedia/commons/0/00/Kareem-Abdul-Jabbar_Lipofsky.jpg"],
+["לארי בירד","https://images1.ynet.co.il/PicServer3/2013/08/14/4799613/47996030100689408511no.jpg"],
+["טים דאנקן","https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Tim_Duncan.jpg/500px-Tim_Duncan.jpg"],
+["קווין דוראנט","https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Kevin_Durant_Interview_in_2023_-_2.png/500px-Kevin_Durant_Interview_in_2023_-_2.png"]
+];
+/* עובדות */
+const FACTS=[
+"כדורסל הומצא ב-1891 על ידי ג'יימס נייסמית׳, ובהתחלה זרקו לסלי אפרסקים.",
+"ווילט צ'מברלין קלע 100 נקודות במשחק אחד ב-2 במרץ 1962.",
+"ה-Dream Team של 1992 ניצחה את יריבותיה בממוצע של יותר מ-40 נקודות הפרש.",
+"מייקל ג'ורדן אף פעם לא הפסיד בגמר ה-NBA: 6 גמרים, 6 אליפויות.",
+"בוסטון סלטיקס זכתה ב-8 אליפויות ברצף בין 1959 ל-1966.",
+"קארים עבדול-ג'אבר שיחק 20 עונות ב-NBA.",
+"אומרי כספי הפך ב-2009 לישראלי הראשון ששיחק ב-NBA.",
+"דני אבדיה נבחר במקום ה-9 בדראפט 2020, מיקום גבוה מכל ישראלי לפניו.",
+"ג'ורדן נבחר שלישי בדראפט 1984, אחרי האקים אולג'ואון וסם באואי.",
+"גולדן סטייט סיימה את עונת 2015-16 עם מאזן 73-9, שיא בהיסטוריה.",
+"קובי בראיינט קלע 81 נקודות נגד טורונטו ב-22 בינואר 2006.",
+"קליעה לשלוש נקודות נכנסה ל-NBA רק בעונת 1979-80.",
+"ביל ראסל זכה ב-11 אליפויות ב-13 עונות.",
+"ב-2016 סטף קרי היה הראשון שנבחר ל-MVP פה אחד.",
+"באוקטובר 2024 לברון ג'יימס ובנו ברוני שיחקו יחד בלייקרס, אב ובן ראשונים אי פעם ב-NBA.",
+"בעונה סדירה כל קבוצה משחקת 82 משחקים.",
+"הלייקרס קיבלו את שמם במינסוטה, “ארץ 10,000 האגמים”, ולא בלוס אנג'לס.",
+"ג'ורדן פרש ב-1993, ניסה בייסבול ב-1994 וחזר ל-NBA ב-1995.",
+"משחק האולסטאר של ה-NBA נערך מאז 1951.",
+"מג'יק ג'ונסון היה MVP הגמר כטירון ב-1980.",
+"הקבוצה הראשונה מחוץ לארה״ב שזכתה באליפות NBA היא טורונטו ראפטורס ב-2019."
+];
+
+/* ============ ניווט ============ */
+const VIEWS=[["trivia","🧠","חידון ענק","65 שאלות ב-6 נושאים, שעון ו-50:50"],["guess","🔍","נחש את הקבוצה/השחקן","סמל או תמונה מוסתרים חלקית"],["tf","⚡","נכון / לא נכון","45 שניות, 3 חיים, כמה תצליחו?"],["who","🕵️","מי זה השחקן?","נחשו לפי רמזים. פחות רמזים = יותר נקודות"],["hol","📈","גבוה או נמוך","מי עם יותר נקודות/אליפויות/MVP?"],["mem","🧩","משחק זיכרון","התאימו עיר לקבוצה"],["tl","⏳","ציר הזמן","סדרו אירועי NBA לפי שנה"],["hang","🔤","תלייה NBA","נחשו שחקנים וקבוצות באותיות"],["shoot","🎯","אתגר הקליעה","עצרו את המחוון באזור הירוק"],["draft","👑","בנה חמישייה","בחרו אגדות ונצחו קבוצות היסטוריות"],["stats","📊","טבלאות סטטיסטיקה","100 שחקנים: מיון, חיפוש והשוואה"],["profile","🏅","הפרופיל שלי","דרגה, שיאים והישגים"],["about","ℹ️","אודות","מי יצר את האתר"]];
+$("#app").innerHTML=`<section class="view" id="home"><div id="homeBox"></div></section>`+VIEWS.map(([id,ic,t])=>`<section class="view" id="${id}"><div class="top"><button class="back" onclick="go('home')">→ חזרה</button><h2>${ic} ${t}</h2></div><div id="${id}Box"></div></section>`).join("");
+
+function go(id){
+  [Trivia,TF,Mem,Shoot,Hang,Guess].forEach(m=>m.stop&&m.stop());
+  closeMenu();
+  $$(".view").forEach(v=>v.classList.toggle("active",v.id===id));
+  window.scrollTo({top:0});
+  const init={home:renderHome,trivia:()=>Trivia.menu(),guess:()=>Guess.menu(),tf:()=>TF.menu(),who:()=>Who.menu(),hol:()=>HoL.menu(),mem:()=>Mem.menu(),tl:()=>TL.menu(),hang:()=>Hang.menu(),shoot:()=>Shoot.menu(),draft:()=>Draft.menu(),profile:renderProfile,stats:()=>Stats.render(),about:renderAbout}[id];
+  init&&init();
+}
+function renderHome(){
+  $("#homeBox").innerHTML=`<div class="hero"><h1>🏀 ברוכים הבאים ל-NBA ארנה</h1><p>חידונים, משחקים ואתגרים לאוהדי הכדורסל. צברו XP, עלו דרגות ופתחו הישגים!</p></div>
+  <div class="card fact"><p id="factTxt">💡 ${FACTS[ri(FACTS.length)]}</p><button class="btn ghost small" onclick="newFact()">עוד עובדה</button></div>
+  <div class="grid">${VIEWS.filter(v=>v[0]!=="profile"&&v[0]!=="about").map(([id,ic,t,d])=>`<div class="gc" onclick="go('${id}')"><div class="ic">${ic}</div><h3>${t}</h3><p>${d}</p></div>`).join("")}</div>
+  <div class="row"><button class="btn ghost" onclick="go('profile')">🏅 הפרופיל וההישגים שלי</button></div>`;
+}
+function newFact(){$("#factTxt").textContent="💡 "+FACTS[ri(FACTS.length)];}
+
+/* ============ נחש את הקבוצה/השחקן ============ */
+const Guess={
+ s:null,
+ TILES:25, START_HIDDEN:16, PER_REVEAL:4, MAX_REVEALS:4, ROUNDS_T:5, ROUNDS_P:3,
+ stop(){this.s=null;},
+ menu(){this.s=null;$("#guessBox").innerHTML=`<div class="card center">
+  <p class="lead">מוצג סמל של קבוצה או תמונה של שחקן, כשחלק ממנו מכוסה בריבועים. בחרו מתוך 4 אפשרויות.</p>
+  <p class="muted">8 סיבובים. מתחילים ב-50 נקודות לסיבוב, וכל חשיפה מורידה 10. טעות חושפת עוד ריבועים, ואחרי 3 טעויות עוברים לסיבוב הבא.</p>
+  <p class="muted">השיא שלכם: ${save.best.guess||0} נקודות</p>
+  <button class="btn" onclick="Guess.start()">מתחילים</button></div>`;},
+ start(){
+  const items=[
+   ...pick(GUESS_TEAMS,this.ROUNDS_T).map(t=>({k:"t",n:t[0],img:t[1]})),
+   ...pick(GUESS_PLAYERS,this.ROUNDS_P).map(p=>({k:"p",n:p[0],img:p[1]}))
+  ];
+  this.s={items:shuffle(items),r:0,total:0,streak:0,best:0,aces:0};
+  this.round();},
+ round(){
+  const s=this.s,it=s.items[s.r];
+  const pool=(it.k==="t"?GUESS_TEAMS:GUESS_PLAYERS).map(x=>x[0]);
+  s.opts=shuffle([it.n,...pick(pool.filter(x=>x!==it.n),3)]);
+  s.order=shuffle([...Array(this.TILES).keys()]).slice(0,this.START_HIDDEN);
+  s.rev=0;s.res=null;s.dis=[];
+  this.draw();},
+ hidden(){const s=this.s;if(s.res)return [];return s.order.slice(0,Math.max(0,this.START_HIDDEN-s.rev*this.PER_REVEAL));},
+ value(){return Math.max(10,50-this.s.rev*10);},
+ draw(){
+  const s=this.s,it=s.items[s.r],hid=this.hidden();
+  const mask=[...Array(this.TILES).keys()].map(i=>`<i class="${hid.includes(i)?"":"off"}"></i>`).join("");
+  $("#guessBox").innerHTML=`<div class="card">
+  <div class="stats"><span>סיבוב ${s.r+1}/${s.items.length}</span><span>⭐ ${s.total}</span><span>🔥 ${s.streak}</span><span>שווי: ${this.value()}</span></div>
+  <div class="center"><span class="gzKind">${it.k==="t"?"🏟️ סמל של קבוצה":"⛹️ תמונה של שחקן"}</span></div>
+  <div class="gz ${it.k==="p"?"ph":""}"><div class="im"><img src="${it.img}" alt=""></div><div class="gzMask">${mask}</div></div>
+  <div class="opts">${s.opts.map((n,k)=>`<button class="opt ${s.res&&n===it.n?"correct":""} ${s.dis.includes(k)?"wrong":""}" ${s.res||s.dis.includes(k)?"disabled":""} onclick="Guess.guess(${k})">${n}</button>`).join("")}</div>
+  <div class="fb ${s.res==="win"?"ok":"no"}">${s.res==="win"?"✅ נכון! +"+this.value():s.res==="lose"?"❌ זה היה "+it.n:""}</div>
+  <div class="center">${s.res?"":s.rev<this.MAX_REVEALS?`<button class="btn ghost small" onclick="Guess.reveal()">👁️ חשוף עוד (-10)</button>`:`<span class="muted">הכל חשוף</span>`}</div></div>`;},
+ reveal(){const s=this.s;if(!s||s.res||s.rev>=this.MAX_REVEALS)return;s.rev++;this.draw();},
+ guess(k){
+  const s=this.s;if(!s||s.res)return;const it=s.items[s.r];
+  if(s.opts[k]===it.n){
+   s.total+=this.value();s.streak++;s.best=Math.max(s.best,s.streak);
+   if(s.rev===0){s.aces++;unlock("eagle");}
+   if(s.streak>=8)unlock("logo8");
+   s.res="win";this.draw();this.next();
+  }else{
+   s.dis.push(k);s.streak=0;
+   if(s.rev<this.MAX_REVEALS)s.rev++;
+   if(s.dis.length>=3)s.res="lose";
+   this.draw();
+   if(s.res)this.next();
+  }},
+ next(){const s=this.s;setTimeout(()=>{if(this.s!==s)return;s.r++;s.r<s.items.length?this.round():this.end();},1700);},
+ end(){const s=this.s;const xp=Math.round(s.total/2);const nb=setBest("guess",s.total);finish(xp);
+  $("#guessBox").innerHTML=resultHTML(s.total>=300?"🏆":s.total>=180?"👏":"🔍","סיימתם את הזיהוי",
+   [`ניקוד: ${s.total} מתוך 400${nb?" (שיא חדש! 🎉)":""}`,`זיהוי מיידי בלי לחשוף: ${s.aces} פעמים`,`רצף הכי ארוך: ${s.best}`,`+${xp} XP`],
+   `<button class="btn" onclick="Guess.start()">שוב</button><button class="btn ghost" onclick="go('home')">לתפריט</button>`);}
+};
+
+/* ============ חידון ============ */
+const Trivia={
+ cats:{all:"🎲 הכל",hist:"📜 היסטוריה",play:"⭐ שחקנים",team:"🏟️ קבוצות",rec:"📊 שיאים",rule:"📏 חוקים",isr:"🇮🇱 ישראלים"},
+ s:null,tm:null,
+ halt(){clearInterval(this.tm);this.tm=null;},
+ stop(){this.halt();this.s=null;},
+ menu(){this.stop();$("#triviaBox").innerHTML=`<div class="card center"><p class="lead">בחרו נושא. עד 10 שאלות, 15 שניות לכל שאלה, ועזרת 50:50 אחת.</p><div class="chips">${Object.entries(this.cats).map(([k,v])=>`<button class="btn" onclick="Trivia.start('${k}')">${v}</button>`).join("")}</div><p class="muted">השיא שלכם: ${save.best.trivia||0} נקודות</p></div>`;},
+ start(cat){const pool=cat==="all"?TRIVIA:TRIVIA.filter(q=>q[0]===cat);this.s={qs:pick(pool,Math.min(10,pool.length)),i:0,score:0,ok:0,streak:0,best:0,used:false,lock:false};this.show();},
+ show(){const s=this.s,q=s.qs[s.i];s.opts=shuffle(q[2].map((t,k)=>({t,ok:k===q[3]})));s.left=15;s.lock=false;
+  $("#triviaBox").innerHTML=`<div class="card"><div class="stats"><span>שאלה ${s.i+1}/${s.qs.length}</span><span>⭐ ${s.score}</span><span>🔥 ${s.streak}</span></div><div class="tbar"><i id="tb"></i></div><h3 class="q">${q[1]}</h3><div class="opts">${s.opts.map((o,k)=>`<button class="opt" id="o${k}" onclick="Trivia.answer(${k})">${o.t}</button>`).join("")}</div><button class="btn ghost small" id="f5" onclick="Trivia.fifty()" ${s.used?"disabled":""}>50:50</button></div>`;
+  this.halt();this.tm=setInterval(()=>{s.left-=0.1;const b=$("#tb");if(b)b.style.width=Math.max(0,s.left/15*100)+"%";if(s.left<=0)this.answer(-1);},100);},
+ answer(k){const s=this.s;if(!s||s.lock)return;s.lock=true;this.halt();
+  const good=k>=0&&s.opts[k].ok;
+  s.opts.forEach((o,j)=>{const e=$("#o"+j);if(e){e.disabled=true;if(o.ok)e.classList.add("correct");else if(j===k)e.classList.add("wrong");}});
+  if(good){const p=10+Math.ceil(s.left);s.score+=p;s.ok++;s.streak++;s.best=Math.max(s.best,s.streak);toast("+"+p+" נקודות");}else{s.streak=0;}
+  setTimeout(()=>{if(this.s!==s)return;s.i++;s.i<s.qs.length?this.show():this.end();},1300);},
+ fifty(){const s=this.s;if(!s||s.used||s.lock)return;s.used=true;$("#f5").disabled=true;let n=0;shuffle(s.opts.map((o,k)=>k)).forEach(k=>{if(n<2&&!s.opts[k].ok){const e=$("#o"+k);e.disabled=true;e.classList.add("gone");n++;}});},
+ end(){const s=this.s;this.halt();const xp=Math.round(s.score/3);const nb=setBest("trivia",s.score);
+  if(s.ok===s.qs.length&&s.qs.length>=10)unlock("trivia_perfect");if(s.best>=8)unlock("trivia_streak");finish(xp);
+  $("#triviaBox").innerHTML=resultHTML(s.ok>=8?"🏆":s.ok>=5?"👏":"💪","סיימתם!",[`ענו נכון על ${s.ok} מתוך ${s.qs.length}`,`ניקוד: ${s.score}${nb?" (שיא חדש! 🎉)":""}`,`+${xp} XP`],`<button class="btn" onclick="Trivia.menu()">שוב</button><button class="btn ghost" onclick="go('home')">לתפריט</button>`);}
+};
+
+/* ============ נכון / לא נכון ============ */
+const TF={
+ s:null,tm:null,
+ halt(){clearInterval(this.tm);this.tm=null;},
+ stop(){this.halt();this.s=null;},
+ menu(){this.stop();$("#tfBox").innerHTML=`<div class="card center"><p class="lead">⏱️ 45 שניות. שלוש טעויות ואתם בחוץ. כמה אמיתות תזהו?</p><p class="muted">השיא שלכם: ${save.best.tf||0}</p><button class="btn" onclick="TF.start()">יאללה!</button></div>`;},
+ start(){this.halt();const s=this.s={list:shuffle(TFQ),i:0,score:0,lives:3,left:45,lock:false,over:false};this.draw();
+  this.tm=setInterval(()=>{s.left-=0.1;const e=$("#tfT");if(e)e.textContent=Math.max(0,Math.ceil(s.left));if(s.left<=0)this.end();},100);},
+ cur(){const s=this.s;return s.list[s.i%s.list.length];},
+ draw(){const s=this.s;$("#tfBox").innerHTML=`<div class="card center"><div class="stats"><span>⏱️ <b id="tfT">${Math.ceil(s.left)}</b></span><span>✅ ${s.score}</span><span>${"❤️".repeat(Math.max(0,s.lives))}</span></div><h3 class="q">${this.cur()[0]}</h3><div class="row"><button class="btn good" onclick="TF.ans(true)">✅ נכון</button><button class="btn bad" onclick="TF.ans(false)">❌ לא נכון</button></div><div id="tfFb" class="fb"></div></div>`;},
+ ans(v){const s=this.s;if(!s||s.lock||s.over)return;s.lock=true;const ok=v===this.cur()[1];if(ok)s.score++;else s.lives--;
+  const f=$("#tfFb");f.textContent=ok?"✅ נכון!":"❌ טעות";f.className="fb "+(ok?"ok":"no");
+  setTimeout(()=>{if(this.s!==s||s.over)return;if(s.lives<=0||s.left<=0)return this.end();s.i++;s.lock=false;this.draw();},550);},
+ end(){const s=this.s;if(!s||s.over)return;s.over=true;this.halt();const xp=s.score*6;const nb=setBest("tf",s.score);if(s.score>=15)unlock("tf15");finish(xp);
+  $("#tfBox").innerHTML=resultHTML(s.score>=15?"⚡":"⏱️","נגמר הזמן!",[`זיהיתם נכון ${s.score} משפטים${nb?" (שיא חדש! 🎉)":""}`,`+${xp} XP`],`<button class="btn" onclick="TF.start()">שוב</button><button class="btn ghost" onclick="go('home')">לתפריט</button>`);}
+};
+
+/* ============ מי זה השחקן ============ */
+const Who={
+ s:null,
+ menu(){this.s=null;$("#whoBox").innerHTML=`<div class="card center"><p class="lead">6 שחקנים. מקבלים רמז אחד, ואפשר לבקש עוד. ככל שפחות רמזים, יותר נקודות (עד 50).</p><p class="muted">השיא שלכם: ${save.best.who||0}</p><button class="btn" onclick="Who.start()">מתחילים</button></div>`;},
+ start(){this.s={ps:pick(WHO,6),r:0,total:0,aces:0};this.round();},
+ round(){const s=this.s,p=s.ps[s.r];s.shown=1;s.res=null;s.dis=[];s.opts=shuffle([p.n,...pick(WHO.filter(x=>x!==p).map(x=>x.n),3)]);this.draw();},
+ draw(){const s=this.s,p=s.ps[s.r];
+  $("#whoBox").innerHTML=`<div class="card"><div class="stats"><span>שחקן ${s.r+1}/${s.ps.length}</span><span>⭐ ${s.total}</span><span>שווי: ${(6-s.shown)*10}</span></div>
+  <ul class="clues">${p.c.slice(0,s.shown).map(c=>`<li>${c}</li>`).join("")}</ul>
+  <div class="opts">${s.opts.map((n,k)=>`<button class="opt ${s.res&&n===p.n?"correct":""} ${s.dis.includes(k)?"wrong":""}" ${s.res||s.dis.includes(k)?"disabled":""} onclick="Who.guess(${k})">${n}</button>`).join("")}</div>
+  <div class="fb ${s.res==="win"?"ok":"no"}">${s.res==="win"?"נכון! +"+(6-s.shown)*10:s.res==="lose"?"לא הצלחתם. זה היה "+p.n:""}</div>
+  ${s.res?"":s.shown<5?`<button class="btn ghost small" onclick="Who.more()">רמז נוסף (-10)</button>`:""}</div>`;},
+ more(){const s=this.s;if(s.res||s.shown>=5)return;s.shown++;this.draw();},
+ guess(k){const s=this.s,p=s.ps[s.r];if(s.res)return;
+  if(s.opts[k]===p.n){s.res="win";s.total+=(6-s.shown)*10;if(s.shown===1){s.aces++;unlock("who_ace");}this.draw();this.next();}
+  else{s.dis.push(k);if(s.shown<5)s.shown++;else s.res="lose";this.draw();if(s.res)this.next();}},
+ next(){const s=this.s;setTimeout(()=>{if(this.s!==s)return;s.r++;s.r<s.ps.length?this.round():this.end();},1700);},
+ end(){const s=this.s;const xp=Math.round(s.total/2);const nb=setBest("who",s.total);finish(xp);
+  $("#whoBox").innerHTML=resultHTML("🕵️","סיימתם את החקירה!",[`ניקוד: ${s.total} מתוך 300${nb?" (שיא חדש! 🎉)":""}`,`נחשתם ברמז הראשון ${s.aces} פעמים`,`+${xp} XP`],`<button class="btn" onclick="Who.start()">שוב</button><button class="btn ghost" onclick="go('home')">לתפריט</button>`);}
+};
+
+/* ============ גבוה או נמוך ============ */
+const HoL={
+ modes:{pts:{n:"🏀 נקודות קריירה",d:HOL_PTS,q:"למי יש יותר נקודות בקריירה (עונה סדירה)?",u:"נק׳"},tit:{n:"🏆 אליפויות",d:HOL_TITLES,q:"למי יש יותר אליפויות NBA כשחקן?",u:"אליפויות"},mvp:{n:"⭐ תארי MVP",d:HOL_MVP,q:"למי יש יותר תארי MVP של העונה?",u:"MVP"}},
+ s:null,
+ menu(){this.s=null;$("#holBox").innerHTML=`<div class="card center"><p class="lead">רואים שחקן עם מספר, וצריך לנחש אם לשחקן הבא יש יותר או פחות. כמה זמן תחזיקו ברצף?</p><div class="chips">${Object.entries(this.modes).map(([k,m])=>`<button class="btn" onclick="HoL.start('${k}')">${m.n}</button>`).join("")}</div><p class="muted">נתוני קריירה מעוגלים, שחקנים שפרשו, לשעשוע בלבד.</p></div>`;},
+ nxt(){const d=this.modes[this.s.m].d,c=this.s.cur;let n;do{n=d[ri(d.length)];}while(n===c||n[1]===c[1]);return n;},
+ start(m){const d=this.modes[m].d;this.s={m,streak:0,cur:d[ri(d.length)],lock:false};this.s.nx=this.nxt();this.draw(false,null);},
+ draw(rev,ok){const s=this.s,m=this.modes[s.m];
+  $("#holBox").innerHTML=`<div class="card center"><div class="stats"><span>${m.n}</span><span>🔥 רצף: ${s.streak}</span><span>שיא: ${save.best["hol_"+s.m]||0}</span></div><h3>${m.q}</h3>
+  <div class="hol"><div class="hc"><h3>${s.cur[0]}</h3><div class="v">${s.cur[1].toLocaleString("en-US")}</div><small class="muted">${m.u}</small></div>
+  <div class="hc ${rev?(ok?"ok":"no"):""}"><h3>${s.nx[0]}</h3><div class="v">${rev?s.nx[1].toLocaleString("en-US"):"?"}</div><small class="muted">${m.u}</small></div></div>
+  ${rev?`<div class="fb ${ok?"ok":"no"}">${ok?"✅ נכון!":"❌ טעות"}</div>`:`<div class="row"><button class="btn good" onclick="HoL.guess(true)">⬆️ יותר</button><button class="btn bad" onclick="HoL.guess(false)">⬇️ פחות</button></div>`}</div>`;},
+ guess(up){const s=this.s;if(s.lock)return;s.lock=true;const ok=up?s.nx[1]>s.cur[1]:s.nx[1]<s.cur[1];this.draw(true,ok);
+  if(ok){s.streak++;if(s.streak>=10)unlock("hol10");setTimeout(()=>{if(this.s!==s)return;s.cur=s.nx;s.nx=this.nxt();s.lock=false;this.draw(false,null);},1200);}
+  else setTimeout(()=>{if(this.s===s)this.end();},1500);},
+ end(){const s=this.s;const xp=s.streak*5;const nb=setBest("hol_"+s.m,s.streak);finish(xp);
+  $("#holBox").innerHTML=resultHTML("📈","המשחק נגמר",[`רצף של ${s.streak}${nb?" (שיא חדש! 🎉)":""}`,`+${xp} XP`],`<button class="btn" onclick="HoL.start('${s.m}')">שוב</button><button class="btn ghost" onclick="HoL.menu()">נושא אחר</button>`);}
+};
+
+/* ============ זיכרון ============ */
+const Mem={
+ s:null,tm:null,
+ halt(){clearInterval(this.tm);this.tm=null;},
+ stop(){this.halt();this.s=null;},
+ menu(){this.stop();$("#memBox").innerHTML=`<div class="card center"><p class="lead">התאימו כל עיר לקבוצה שלה. הכי מעט מהלכים מנצח!</p><p class="muted">השיא שלכם: ${save.best.mem?save.best.mem+" מהלכים":"עדיין אין"}</p><button class="btn" onclick="Mem.start()">מתחילים</button></div>`;},
+ start(){this.halt();const ps=pick(PAIRS,8);const cards=shuffle(ps.flatMap((p,i)=>[{id:i,t:p[0]},{id:i,t:p[1]}])).map(c=>({...c,open:false,done:false}));
+  const s=this.s={cards,sel:[],moves:0,found:0,lock:false,t0:Date.now()};
+  $("#memBox").innerHTML=`<div class="card"><div class="stats"><span>מהלכים: <b id="mvs">0</b></span><span>⏱️ <b id="memTime">0</b>s</span><span>זוגות: <b id="fnd">0</b>/8</span></div><div class="mem" id="memGrid"></div></div>`;
+  this.grid();this.tm=setInterval(()=>{const e=$("#memTime");if(e)e.textContent=Math.floor((Date.now()-s.t0)/1000);},500);},
+ grid(){const s=this.s;$("#memGrid").innerHTML=s.cards.map((c,i)=>`<button class="mc ${c.open?"open":""} ${c.done?"done":""}" onclick="Mem.flip(${i})">${c.open||c.done?c.t:"🏀"}</button>`).join("");$("#mvs").textContent=s.moves;$("#fnd").textContent=s.found;},
+ flip(i){const s=this.s;if(!s||s.lock)return;const c=s.cards[i];if(c.open||c.done)return;c.open=true;s.sel.push(i);
+  if(s.sel.length===2){s.moves++;const[a,b]=s.sel.map(x=>s.cards[x]);
+   if(a.id===b.id){a.done=b.done=true;a.open=b.open=false;s.found++;s.sel=[];this.grid();if(s.found===8)this.end();}
+   else{s.lock=true;this.grid();setTimeout(()=>{if(this.s!==s)return;a.open=b.open=false;s.sel=[];s.lock=false;this.grid();},850);}
+  }else this.grid();},
+ end(){const s=this.s;this.halt();const sec=Math.floor((Date.now()-s.t0)/1000);const xp=Math.max(15,Math.round(110-(s.moves-8)*6-sec/3));const nb=setBest("mem",s.moves,true);if(s.moves<=14)unlock("mem14");finish(xp);
+  setTimeout(()=>{$("#memBox").innerHTML=resultHTML("🧩","כל הזוגות נמצאו!",[`${s.moves} מהלכים ב-${sec} שניות${nb?" (שיא חדש! 🎉)":""}`,`+${xp} XP`],`<button class="btn" onclick="Mem.start()">שוב</button><button class="btn ghost" onclick="go('home')">לתפריט</button>`);},700);}
+};
+
+/* ============ ציר הזמן ============ */
+const TL={
+ s:null,
+ menu(){this.s=null;$("#tlBox").innerHTML=`<div class="card center"><p class="lead">5 סיבובים. בכל סיבוב 4 אירועים, ולוחצים עליהם לפי הסדר מהמוקדם למאוחר.</p><p class="muted">השיא שלכם: ${save.best.tl||0}/20</p><button class="btn" onclick="TL.start()">מתחילים</button></div>`;},
+ start(){this.s={r:0,score:0};this.round();},
+ round(){const s=this.s;const seen=new Set(),it=[];for(const e of shuffle(TLE)){if(!seen.has(e[0])){seen.add(e[0]);it.push(e);}if(it.length===4)break;}
+  s.items=it;s.order=[];s.done=false;this.draw();},
+ draw(){const s=this.s,sorted=[...s.items].sort((a,b)=>a[0]-b[0]);
+  $("#tlBox").innerHTML=`<div class="card"><div class="stats"><span>סיבוב ${s.r+1}/5</span><span>⭐ ${s.score}</span></div><p>לחצו על האירועים מהמוקדם ביותר למאוחר ביותר:</p>
+  <div class="evs">${s.items.map((e,i)=>{const pos=s.order.indexOf(i);const good=s.done&&sorted[pos]===e;return `<button class="ev ${s.done?(good?"ok":"no"):""}" ${pos>=0?"disabled":""} onclick="TL.click(${i})"><span class="n">${pos>=0?pos+1:"?"}</span><span>${e[1]}</span>${s.done?`<span class="yr">${e[0]}</span>`:""}</button>`;}).join("")}</div>
+  <div class="row">${s.done?`<button class="btn" onclick="TL.next()">${s.r<4?"הסיבוב הבא":"לתוצאות"}</button>`:`<button class="btn ghost small" onclick="TL.reset()">איפוס</button>`}</div></div>`;},
+ reset(){this.s.order=[];this.draw();},
+ click(i){const s=this.s;if(s.done||s.order.includes(i))return;s.order.push(i);
+  if(s.order.length===4){s.done=true;const sorted=[...s.items].sort((a,b)=>a[0]-b[0]);const ok=s.order.filter((x,p)=>sorted[p]===s.items[x]).length;s.score+=ok;toast(ok+" מתוך 4 במקום הנכון");}
+  this.draw();},
+ next(){const s=this.s;s.r++;s.r<5?this.round():this.end();},
+ end(){const s=this.s;const xp=s.score*5;const nb=setBest("tl",s.score);if(s.score>=16)unlock("time16");finish(xp);
+  $("#tlBox").innerHTML=resultHTML("⏳","סיימתם את המסע בזמן",[`${s.score} מתוך 20${nb?" (שיא חדש! 🎉)":""}`,`+${xp} XP`],`<button class="btn" onclick="TL.start()">שוב</button><button class="btn ghost" onclick="go('home')">לתפריט</button>`);}
+};
+
+/* ============ תלייה ============ */
+const Hang={
+ s:null,
+ stop(){},
+ menu(){this.s=null;$("#hangBox").innerHTML=`<div class="card center"><p class="lead">נחשו שם שחקן או קבוצה (באנגלית) לפי הרמז. 6 כדורים בלבד! אפשר להשתמש גם במקלדת.</p><p class="muted">שיא רצף: ${save.best.hang||0} מילים</p><button class="btn" onclick="Hang.start()">מתחילים</button></div>`;},
+ start(){this.s={list:shuffle(WORDS),i:0,streak:0,xp:0};this.word();},
+ word(){const s=this.s,w=s.list[s.i%s.list.length];s.w=w[0];s.h=w[1];s.lives=6;s.g=new Set();s.res=null;this.draw();},
+ draw(){const s=this.s,rows=["QWERTYUIOP","ASDFGHJKL","ZXCVBNM"];
+  $("#hangBox").innerHTML=`<div class="card center"><div class="stats"><span>רצף: ${s.streak}</span><span>${"🏀".repeat(s.lives)||"💀"}</span></div><p class="lead">💡 ${s.h}</p>
+  <div class="word" dir="ltr">${[...s.w].map(l=>`<span>${s.g.has(l)||s.res==="lose"?l:""}</span>`).join("")}</div>
+  <div class="fb ${s.res==="win"?"ok":"no"}">${s.res==="win"?"🎉 נכון!":s.res==="lose"?"נגמרו הכדורים. המילה: "+s.w:""}</div>
+  ${s.res?"":rows.map(r=>`<div class="kb" style="margin-bottom:6px">${[...r].map(l=>`<button class="${s.g.has(l)?(s.w.includes(l)?"hit":"miss"):""}" ${s.g.has(l)?"disabled":""} onclick="Hang.guess('${l}')">${l}</button>`).join("")}</div>`).join("")}
+  <div class="row">${s.res==="win"?`<button class="btn" onclick="Hang.nextWord()">מילה הבאה</button>`:s.res==="lose"?`<button class="btn" onclick="Hang.end()">לסיכום</button>`:""}</div></div>`;},
+ guess(l){const s=this.s;if(!s||s.res||s.g.has(l))return;s.g.add(l);if(!s.w.includes(l))s.lives--;
+  if([...s.w].every(x=>s.g.has(x))){s.res="win";s.streak++;s.xp+=8+s.lives*2;if(s.streak>=5)unlock("hang5");}
+  else if(s.lives<=0)s.res="lose";
+  this.draw();},
+ nextWord(){this.s.i++;this.word();},
+ end(){const s=this.s;const nb=setBest("hang",s.streak);finish(s.xp);
+  $("#hangBox").innerHTML=resultHTML("🔤","סיכום תלייה",[`נחשתם ${s.streak} מילים ברצף${nb?" (שיא חדש! 🎉)":""}`,`+${s.xp} XP`],`<button class="btn" onclick="Hang.start()">שוב</button><button class="btn ghost" onclick="go('home')">לתפריט</button>`);}
+};
+document.addEventListener("keydown",e=>{
+  if(Hang.s&&$("#hang").classList.contains("active")&&/^[a-zA-Z]$/.test(e.key))Hang.guess(e.key.toUpperCase());
+  if(e.code==="Space"&&$("#shoot").classList.contains("active")&&Shoot.s&&Shoot.on){e.preventDefault();Shoot.shoot();}
+});
+
+/* ============ אתגר הקליעה ============ */
+const Shoot={
+ modes:{
+  ft:{n:"🟢 עונשין",shots:10,pts:1,pf:.045,gd:.10,sp:.8,sx:380,d:"אזור ירוק רחב וקל"},
+  three:{n:"🟡 קשת",shots:10,pts:3,pf:.03,gd:.065,sp:1.15,sx:250,d:"אזור צר ומהיר יותר"},
+  half:{n:"🔴 חצי מגרש",shots:8,pts:4,pf:.02,gd:.045,sp:1.5,sx:90,d:"לאמיצים בלבד"}
+ },
+ s:null,on:false,raf:0,m:null,
+ stop(){this.on=false;cancelAnimationFrame(this.raf);this.s=null;},
+ menu(){this.stop();$("#shootBox").innerHTML=`<div class="card center"><p class="lead">עצרו את המחוון באמצע (האזור הירוק) כדי לקלוע. לוחצים על הכפתור, על המגרש או על רווח.</p><div class="chips">${Object.entries(this.modes).map(([k,m])=>`<button class="btn" onclick="Shoot.start('${k}')">${m.n}<br><small>${m.d}</small></button>`).join("")}</div><p class="muted">שיאים: עונשין ${save.best.shoot_ft||0} · קשת ${save.best.shoot_three||0} · חצי מגרש ${save.best.shoot_half||0}</p></div>`;},
+ start(k){this.stop();const m=this.m=this.modes[k];
+  $("#shootBox").innerHTML=`<div class="card"><div class="stats"><span>זריקות: <b id="shl">${m.shots}</b></span><span>🎯 קליעות: <b id="shm">0</b></span><span>⭐ <b id="shs">0</b></span><span>🔥 <b id="shk">0</b></span></div>
+  <canvas id="cv" width="640" height="360" onclick="Shoot.shoot()"></canvas>
+  <div class="bar"><div class="z1" style="left:${50-m.gd*100}%;width:${m.gd*200}%"></div><div class="z2" style="left:${50-m.pf*100}%;width:${m.pf*200}%"></div><div id="mk"></div></div>
+  <div class="msg" id="smsg"></div><div class="row"><button class="btn" id="shb" onclick="Shoot.shoot()">🏀 זרוק!</button></div></div>`;
+  this.ctx=$("#cv").getContext("2d");
+  this.s={k,left:m.shots,made:0,score:0,streak:0,perfects:0,pos:0,anim:null,over:false,ball:{x:m.sx,y:220}};
+  this.on=true;this.raf=requestAnimationFrame(t=>this.loop(t));},
+ loop(now){if(!this.on||!this.s)return;const s=this.s;
+  if(!s.anim&&!s.over){const p=((now/1000)*this.m.sp)%2;s.pos=p<1?p:2-p;const mk=$("#mk");if(mk)mk.style.left=(s.pos*100)+"%";}
+  if(s.anim){const a=s.anim;let t=now-a.t0;let done=true;
+   for(const ph of a.ph){if(t<=ph.d){const u=t/ph.d;s.ball={x:ph.a.x+(ph.b.x-ph.a.x)*u,y:ph.t==="arc"?ph.a.y+(ph.b.y-ph.a.y)*u-ph.h*4*u*(1-u):ph.a.y+(ph.b.y-ph.a.y)*u*u};done=false;break;}t-=ph.d;}
+   if(done){const last=a.ph[a.ph.length-1];s.ball={...last.b};s.anim=null;this.resolve(a.kind);}}
+  this.draw();this.raf=requestAnimationFrame(t=>this.loop(t));},
+ shoot(){const s=this.s;if(!s||s.anim||s.over||!this.on)return;const m=this.m,d=Math.abs(s.pos-.5);
+  const kind=d<m.pf?"swish":d<m.gd?"make":d<m.gd*1.9?"rim":"air";const side=s.pos<.5?-1:1;
+  const a={x:m.sx,y:220},H=90+Math.min(110,(540-m.sx)*.28),rin={x:527,y:166},ph=[];
+  if(kind==="swish"||kind==="make"){ph.push({a,b:rin,d:900,t:"arc",h:H},{a:rin,b:{x:527,y:250},d:260,t:"fall"},{a:{x:527,y:250},b:{x:520,y:293},d:240,t:"fall"});}
+  else if(kind==="rim"){const hit=side<0?{x:498,y:168}:{x:560,y:150};const out=side<0?{x:468,y:120}:{x:500,y:95};ph.push({a,b:hit,d:900,t:"arc",h:H},{a:hit,b:out,d:300,t:"arc",h:25},{a:out,b:{x:side<0?430:455,y:293},d:420,t:"fall"});}
+  else if(side<0){ph.push({a,b:{x:470,y:225},d:900,t:"arc",h:H},{a:{x:470,y:225},b:{x:462,y:294},d:300,t:"fall"});}
+  else{ph.push({a,b:{x:605,y:120},d:900,t:"arc",h:H+20},{a:{x:605,y:120},b:{x:618,y:294},d:420,t:"fall"});}
+  s.anim={ph,t0:performance.now(),kind};$("#shb").disabled=true;},
+ resolve(kind){const s=this.s,m=this.m;const made=kind==="swish"||kind==="make";s.left--;
+  if(made){s.made++;s.score+=m.pts;s.streak++;if(kind==="swish")s.perfects++;}else s.streak=0;
+  $("#shl").textContent=s.left;$("#shm").textContent=s.made;$("#shs").textContent=s.score;$("#shk").textContent=s.streak;
+  const msgs={swish:"שווש! 🔥 מושלם",make:"בפנים! ✅",rim:"יצא מהטבעת! 😬",air:"איירבול! 🙈"};$("#smsg").textContent=msgs[kind]+(s.streak>=3?"  ·  רצף "+s.streak:"");
+  if(s.left<=0){s.over=true;setTimeout(()=>{if(this.s===s)this.end();},1100);}
+  else setTimeout(()=>{if(this.s!==s)return;s.ball={x:m.sx,y:220};const b=$("#shb");if(b)b.disabled=false;},350);},
+ end(){const s=this.s,m=this.m;this.on=false;cancelAnimationFrame(this.raf);const xp=s.score*(s.k==="ft"?6:3)+s.perfects*2;const nb=setBest("shoot_"+s.k,s.score);
+  if(s.k==="ft"&&s.made===10)unlock("swish");if(s.k==="three"&&s.score>=18)unlock("deep");finish(xp);
+  $("#shootBox").innerHTML=resultHTML(s.made>=m.shots*.7?"🏆":"🏀","הסיבוב נגמר",[`קליעות: ${s.made} מתוך ${m.shots} (שווש מושלם: ${s.perfects})`,`ניקוד: ${s.score}${nb?" (שיא חדש! 🎉)":""}`,`+${xp} XP`],`<button class="btn" onclick="Shoot.start('${s.k}')">שוב</button><button class="btn ghost" onclick="Shoot.menu()">שינוי רמה</button>`);},
+ draw(){const c=this.ctx,W=640,H=360,s=this.s;if(!c||!s)return;
+  const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,"#1d2a5a");g.addColorStop(1,"#0e1430");c.fillStyle=g;c.fillRect(0,0,W,H);
+  c.fillStyle="rgba(255,255,255,.05)";for(let i=0;i<14;i++){c.beginPath();c.arc(30+i*48,40+(i%3)*14,6,0,7);c.fill();}
+  c.fillStyle="#b8793a";c.fillRect(0,300,W,60);c.fillStyle="#8a5a2b";c.fillRect(0,300,W,5);
+  c.strokeStyle="rgba(255,255,255,.35)";c.lineWidth=3;c.beginPath();c.moveTo(380,300);c.lineTo(380,360);c.moveTo(250,300);c.lineTo(250,360);c.moveTo(90,300);c.lineTo(90,360);c.stroke();
+  c.fillStyle="#666";c.fillRect(583,100,10,200);
+  c.fillStyle="#f5f7ff";c.fillRect(566,78,8,128);c.strokeStyle="#ff7a1a";c.lineWidth=2;c.strokeRect(566,120,8,40);
+  c.font="42px serif";c.textAlign="center";c.fillText("⛹️",this.m.sx-34,262);
+  const b=s.ball;c.fillStyle="#ff7a1a";c.beginPath();c.arc(b.x,b.y,13,0,7);c.fill();c.strokeStyle="#5a2200";c.lineWidth=1.6;c.stroke();
+  c.beginPath();c.moveTo(b.x-13,b.y);c.lineTo(b.x+13,b.y);c.moveTo(b.x,b.y-13);c.lineTo(b.x,b.y+13);c.stroke();
+  c.beginPath();c.arc(b.x-14,b.y,11,-1,1);c.stroke();c.beginPath();c.arc(b.x+14,b.y,11,2.1,4.2);c.stroke();
+  c.strokeStyle="rgba(255,255,255,.75)";c.lineWidth=1.4;c.beginPath();
+  for(let i=0;i<=6;i++){const x1=494+i*11,x2=508+i*7.5;c.moveTo(x1,170);c.lineTo(x2,208);}
+  for(let j=0;j<3;j++){const y=178+j*12,ins=j*6;c.moveTo(496+ins,y);c.lineTo(560-ins,y);}
+  c.stroke();
+  c.strokeStyle="#ff4d2e";c.lineWidth=5;c.lineCap="round";c.beginPath();c.moveTo(492,168);c.lineTo(566,168);c.stroke();c.lineCap="butt";}
+};
+
+/* ============ בנה חמישייה ============ */
+const Draft={
+ s:null,
+ menu(){this.s=null;$("#draftBox").innerHTML=`<div class="card center"><p class="lead">בכל עמדה תקבלו 4 אגדות לבחירה. בנו חמישייה ונסו לנצח קבוצה היסטורית!</p><p class="muted">הדירוגים (1-99) הם דעה משעשעת שלנו, לא נתון רשמי. אפשר לא להסכים!</p><button class="btn" onclick="Draft.start()">מתחילים</button></div>`;},
+ start(){this.s={i:0,team:[],opts:null};this.pickRound();},
+ pickRound(){const s=this.s;s.opts=pick(POOL[POS[s.i][0]],4);this.draw();},
+ draw(){const s=this.s;
+  $("#draftBox").innerHTML=`<div class="card"><div class="stats"><span>עמדה ${s.i+1}/5</span><span>${s.team.map(p=>p[0].split(" ")[0]).join(" · ")||"הקבוצה ריקה"}</span></div><h3 class="center">בחרו ${POS[s.i][1]} (${POS[s.i][0]})</h3><div class="pl">${s.opts.map((p,k)=>`<button class="pc" onclick="Draft.choose(${k})"><b>${p[0]}</b><span class="rt">${p[1]}</span></button>`).join("")}</div></div>`;},
+ choose(k){const s=this.s;s.team.push(s.opts[k]);s.i++;s.i<5?this.pickRound():this.summary();},
+ avg(){return this.s.team.reduce((a,p)=>a+p[1],0)/5;},
+ summary(){const s=this.s;s.opp=OPPS[ri(OPPS.length)];
+  $("#draftBox").innerHTML=`<div class="card center pop"><h3>החמישייה שלכם</h3><table>${s.team.map((p,i)=>`<tr><td>${POS[i][1]}</td><td><b>${p[0]}</b></td><td><span class="rt">${p[1]}</span></td></tr>`).join("")}</table><p class="lead">דירוג ממוצע: <b>${this.avg().toFixed(1)}</b></p><p>היריבה: <b>${s.opp[0]}</b> (דירוג ${s.opp[1]})</p><div class="row"><button class="btn" onclick="Draft.play()">🏀 שחקו את המשחק!</button><button class="btn ghost" onclick="Draft.start()">בחירה מחדש</button></div></div>`;},
+ split(t){const a=[0,0,0,0];let r=t;for(let i=0;i<3;i++){a[i]=Math.round(t/4+rnd(-4,4));r-=a[i];}a[3]=r;return a;},
+ play(){const s=this.s;const sc=r=>Math.round(95+(r-90)*2.2+rnd(-9,9));let me=sc(this.avg()),op=sc(s.opp[1]);let ot="";
+  if(me===op){const b=ri(2);me+=b?4:2;op+=b?2:4;ot=" (אחרי הארכה)";}
+  const qm=this.split(me),qo=this.split(op),win=me>op;if(win)unlock("draft_win");const xp=win?40:15;finish(xp);
+  $("#draftBox").innerHTML=`<div class="card center pop"><div class="big">${win?"🏆":"😤"}</div><h3>${win?"ניצחתם!":"הפסדתם הפעם"}${ot}</h3><table><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>סה״כ</th></tr><tr><td>אתם</td>${qm.map(x=>`<td>${x}</td>`).join("")}<td><b>${me}</b></td></tr><tr><td>${s.opp[0]}</td>${qo.map(x=>`<td>${x}</td>`).join("")}<td><b>${op}</b></td></tr></table><p>+${xp} XP</p><div class="row"><button class="btn" onclick="Draft.start()">חמישייה חדשה</button><button class="btn ghost" onclick="go('home')">לתפריט</button></div></div>`;}
+};
+
+/* ============ תפריט ============ */
+function toggleMenu(e){e&&e.stopPropagation();$("#menu").classList.toggle("open");}
+function closeMenu(){const m=$("#menu");m&&m.classList.remove("open");}
+document.addEventListener("click",e=>{if(!e.target.closest("#menu"))closeMenu();});
+
+/* ============ סטטיסטיקות: 100 שחקנים ============ */
+/* [שם, עמדה, שנות קריירה, נק׳, ריב׳, אס׳, אליפויות, MVP, פעיל?] ממוצעי קריירה בעונה סדירה, מעוגלים */
+const STATS=[
+["מייקל ג'ורדן","SG","1984–2003",30.1,6.2,5.3,6,5],
+["לברון ג'יימס","SF","2003–",27.0,7.5,7.4,4,4,1],
+["קארים עבדול-ג'אבר","C","1969–1989",24.6,11.2,3.6,6,6],
+["מג'יק ג'ונסון","PG","1979–1996",19.5,7.2,11.2,5,3],
+["לארי בירד","SF","1979–1992",24.3,10.0,6.3,3,3],
+["וילט צ'מברלין","C","1959–1973",30.1,22.9,4.4,2,4],
+["ביל ראסל","C","1956–1969",15.1,22.5,4.3,11,5],
+["קובי בראיינט","SG","1996–2016",25.0,5.2,4.7,5,1],
+["טים דאנקן","PF","1997–2016",19.0,10.8,3.0,5,2],
+["שאקיל או'ניל","C","1992–2011",23.7,10.9,2.5,4,1],
+["האקים אולג'ואון","C","1984–2002",21.8,11.1,2.5,2,1],
+["אוסקר רוברטסון","PG","1960–1974",25.7,7.5,9.5,1,1],
+["ג'רי ווסט","SG","1960–1974",27.0,5.8,6.7,1,0],
+["ג'וליוס ארווינג (דוקטור J)","SF","1976–1987",22.0,6.7,3.9,1,1],
+["מוזס מלון","C","1974–1995",20.6,12.2,1.4,1,3],
+["קארל מאלון","PF","1985–2004",25.0,10.1,3.6,0,2],
+["ג'ון סטוקטון","PG","1984–2003",13.1,2.7,10.5,0,0],
+["דיוויד רובינסון","C","1989–2003",21.1,10.6,2.5,2,1],
+["צ'ארלס ברקלי","PF","1984–2000",22.1,11.7,3.9,0,1],
+["קווין גארנט","PF","1995–2016",17.8,10.0,3.7,1,1],
+["דירק נוביצקי","PF","1998–2019",20.7,7.5,2.4,1,1],
+["סקוטי פיפן","SF","1987–2004",16.1,6.4,4.7,6,0],
+["אייזיה תומאס","PG","1981–1994",19.2,3.6,9.3,2,0],
+["דוויין וויד","SG","2003–2019",22.0,4.7,5.4,3,0],
+["אלן איברסון","SG","1996–2010",26.7,3.7,6.2,0,1],
+["סטיב נאש","PG","1996–2014",14.3,3.0,8.5,0,2],
+["סטף קרי","PG","2009–",24.7,4.7,6.4,4,2,1],
+["קווין דוראנט","SF","2007–",27.2,7.0,4.4,2,1,1],
+["יאניס אנטטוקומבו","PF","2013–",23.5,9.8,4.9,1,2,1],
+["ניקולה יוקיץ'","C","2015–",20.9,10.6,7.0,1,3,1],
+["קוואי לנארד","SF","2011–",19.0,6.3,3.0,2,0,1],
+["לוקה דונצ'יץ'","PG","2018–",28.5,8.3,8.2,0,0,1],
+["ג'יימס הארדן","SG","2009–",24.1,5.6,7.0,0,1,1],
+["ראסל ווסטברוק","PG","2008–",21.4,7.0,8.3,0,1,1],
+["כריס פול","PG","2005–",16.8,4.5,9.2,0,0,1],
+["אלג'ין ביילור","SF","1958–1971",27.4,13.5,4.3,0,0],
+["בוב פטיט","PF","1954–1965",26.4,16.2,3.0,1,2],
+["בוב קוזי","PG","1950–1963",18.4,5.2,7.5,6,1],
+["ג'ון האבליצ'ק","SF","1962–1978",20.8,6.3,4.8,8,0],
+["ריק בארי","SF","1965–1980",23.2,6.7,4.9,1,0],
+["דייב קאוונס","C","1970–1983",18.2,13.6,3.8,2,1],
+["וילס ריד","C","1964–1974",18.7,12.9,1.8,2,1],
+["וולט פרייזר","PG","1967–1980",18.9,5.9,6.1,2,0],
+["ביל וולטון","C","1974–1988",13.3,10.5,3.4,2,1],
+["אלווין הייז","PF","1968–1984",21.0,12.5,1.8,1,0],
+["נייט ת'ורמונד","C","1963–1977",15.0,15.0,2.7,0,0],
+["פטריק יואינג","C","1985–2002",21.0,9.8,1.9,0,0],
+["דומיניק ווילקינס","SF","1982–1999",24.8,6.7,2.5,0,0],
+["קלייד דרקסלר","SG","1983–1998",20.4,6.1,5.6,1,0],
+["גארי פייטון","PG","1990–2007",16.3,3.9,6.7,1,0],
+["ג'ייסון קיד","PG","1994–2013",12.6,6.3,8.7,1,0],
+["רג'י מילר","SG","1987–2005",18.2,3.0,3.0,0,0],
+["ריי אלן","SG","1996–2014",18.9,4.1,3.4,2,0],
+["פול פירס","SF","1998–2017",19.7,5.6,3.5,1,0],
+["טוני פארקר","PG","2001–2019",15.5,2.7,5.6,4,0],
+["מאנו ג'ינובילי","SG","2002–2018",13.3,3.5,3.8,4,0],
+["וינס קרטר","SG","1998–2020",16.7,4.3,3.1,0,0],
+["טרייסי מקגריידי","SG","1997–2013",19.6,5.6,4.4,0,0],
+["קרמלו אנתוני","SF","2003–2022",22.5,6.2,2.7,0,0],
+["כריס בוש","PF","2003–2016",19.2,8.5,2.0,2,0],
+["פאו גאסול","PF","2001–2019",17.0,9.2,3.2,2,0],
+["יאו מינג","C","2002–2011",19.0,9.2,1.6,0,0],
+["דיקמבה מוטומבו","C","1991–2009",9.8,10.3,1.0,0,0],
+["דניס רודמן","PF","1986–2000",7.3,13.1,1.8,5,0],
+["אלונזו מורנינג","C","1992–2008",17.1,8.5,0.9,1,0],
+["ג'רי לוקאס","PF","1963–1974",17.0,15.6,3.1,1,0],
+["אלכס אינגליש","SF","1976–1991",21.5,5.5,3.6,0,0],
+["אדריאן דנטלי","SF","1976–1991",24.3,5.7,3.0,0,0],
+["ברנרד קינג","SF","1977–1993",22.5,5.8,3.3,0,0],
+["קווין מקהייל","PF","1980–1993",17.9,7.3,1.7,3,0],
+["רוברט פאריש","C","1976–1997",14.5,9.1,1.4,4,0],
+["ג'יימס וורת'י","SF","1982–1994",17.6,5.1,3.0,3,0],
+["צ'ונסי בילאפס","PG","1997–2014",15.2,2.9,5.4,1,0],
+["בן וואלאס","C","1996–2012",5.7,9.6,1.3,1,0],
+["דווייט האוורד","C","2004–2022",15.7,11.9,1.4,1,0],
+["דריק רוז","PG","2008–2024",17.4,3.2,5.2,0,1],
+["פני הארדוויי","PG","1993–2007",15.2,4.5,5.0,0,0],
+["גרנט היל","SF","1994–2013",16.7,6.0,4.1,0,0],
+["מארק גאסול","C","2008–2021",14.0,7.4,3.4,1,0],
+["בוב מקאדו","PF","1972–1986",22.1,9.4,2.2,2,1],
+["פיט מרוביץ'","SG","1970–1980",24.2,4.2,5.4,0,0],
+["ארל מונרו","SG","1967–1980",18.8,3.0,3.9,1,0],
+["האל גריר","SG","1958–1973",19.2,5.0,4.0,1,0],
+["ווס אנסלד","C","1968–1981",10.8,14.0,3.9,1,1],
+["לני וילקנס","PG","1960–1975",16.5,4.7,6.7,0,0],
+["סאם ג'ונס","SG","1957–1969",17.7,4.9,2.5,10,0],
+["פול אריזין","SF","1950–1962",22.8,8.6,2.3,1,0],
+["ג'ורג' מייקן","C","1946–1956",22.6,13.4,2.8,5,0],
+["כריס מאלין","SF","1985–2001",18.2,4.1,3.5,0,0],
+["ג'ו דומארס","SG","1985–1999",16.1,2.3,4.5,2,0],
+["טים הארדוויי","PG","1989–2003",17.7,3.1,8.2,0,0],
+["שון קמפ","PF","1989–2003",14.6,8.4,1.5,0,0],
+["בוב לאנייר","C","1970–1984",20.1,10.1,3.1,0,0],
+["דולף שייז","PF","1948–1964",18.5,12.1,3.1,1,0],
+["קווין ג'ונסון","PG","1987–2000",17.9,3.3,9.1,0,0],
+["כריס ווב'ר","PF","1993–2008",20.7,9.8,4.2,0,0],
+["דייב דה-בוסר","PF","1962–1974",16.1,11.0,2.9,2,0],
+["בילי קנינגהם","SF","1965–1976",21.2,10.4,4.3,1,0],
+["דייב בינג","PG","1966–1978",20.3,3.8,6.0,0,0],
+["גייל גודריץ'","SG","1965–1979",18.6,3.2,4.7,1,0]
+];
+const POSN={PG:"רכז",SG:"גארד קלע",SF:"פורוורד קטן",PF:"פורוורד כבד",C:"סנטר"};
+const Stats={
+ key:3,dir:-1,q:"",pos:"all",st:"all",cmp:[],
+ cols:[["שחקן",0],["עמדה",1],["שנים",2],["נק׳",3],["ריב׳",4],["אס׳",5],["אליפויות",6],["MVP",7]],
+ presets:[["🏀 הכי הרבה נקודות",3],["💪 ריבאונדים",4],["🎯 אסיסטים",5],["🏆 אליפויות",6],["⭐ תארי MVP",7]],
+ render(){
+  $("#statsBox").innerHTML=`<div class="card"><p class="lead">100 שחקנים גדולים בכל הזמנים: ממוצעי קריירה בעונה סדירה, אליפויות ותארי MVP. אפשר ללחוץ על כותרת כדי למיין, לחפש, לסנן ולהשוות בין שני שחקנים.</p>
+  <p class="muted">⚠️ הרשימה היא בחירה שלנו ולא דירוג רשמי. המספרים מעוגלים ולא נבדקו מול מקור, אז לפני שמצטטים בעבודה כדאי לאמת באתר basketball-reference.com. אצל שחקנים פעילים (★) המספרים משתנים כל עונה, ולכן מופיע לפניהם ≈. אצל ג'וליוס ארווינג נספרים רק נתוני NBA. עמדות: PG רכז, SG גארד קלע, SF פורוורד קטן, PF פורוורד כבד, C סנטר.</p></div>
+  <div class="card"><div class="ctl"><input class="in" id="stQ" placeholder="🔍 חיפוש שחקן..." oninput="Stats.q=this.value;Stats.table()">
+  <select class="in" onchange="Stats.pos=this.value;Stats.table()"><option value="all">כל העמדות</option>${Object.entries(POSN).map(([k,v])=>`<option value="${k}">${k} · ${v}</option>`).join("")}</select>
+  <select class="in" onchange="Stats.st=this.value;Stats.table()"><option value="all">פעילים ופורשים</option><option value="ret">פורשים בלבד</option><option value="act">פעילים בלבד</option></select></div>
+  <div class="chips">${this.presets.map(p=>`<button class="btn ghost small" onclick="Stats.sort(${p[1]},-1)">${p[0]}</button>`).join("")}</div></div>
+  <div id="stCmp"></div><div class="card"><div class="tw" id="stTable"></div></div>`;
+  this.cmpDraw();this.table();},
+ sort(k,d){if(d===undefined)d=this.key===k?-this.dir:(k<3?1:-1);this.key=k;this.dir=d;this.table();},
+ rows(){const q=this.q.trim().toLowerCase();
+  let r=STATS.map((p,i)=>({p,i})).filter(({p})=>(!q||p[0].toLowerCase().includes(q))&&(this.pos==="all"||p[1]===this.pos)&&(this.st==="all"||(this.st==="act"?p[8]:!p[8])));
+  const k=this.key,d=this.dir;
+  r.sort((a,b)=>{const x=a.p[k],y=b.p[k];const c=typeof x==="string"?x.localeCompare(y,"he"):x-y;return c*d||a.p[0].localeCompare(b.p[0],"he");});
+  return r;},
+ table(){const r=this.rows();
+  $("#stTable").innerHTML=`<table class="st"><thead><tr>${this.cols.map(c=>`<th onclick="Stats.sort(${c[1]})">${c[0]}${c[1]===this.key?(this.dir<0?" ▼":" ▲"):""}</th>`).join("")}<th>השוואה</th></tr></thead><tbody>${
+   r.map(({p,i})=>{const a=p[8]?"≈":"";return `<tr><td><b>${p[0]}</b>${p[8]?'<span class="tag">★ פעיל</span>':""}</td><td>${p[1]}</td><td>${p[2]}</td><td>${a}${p[3].toFixed(1)}</td><td>${a}${p[4].toFixed(1)}</td><td>${a}${p[5].toFixed(1)}</td><td>${p[6]}</td><td>${p[7]}</td><td><button class="cmpb ${this.cmp.includes(i)?"on":""}" onclick="Stats.pick(${i})">⚖️</button></td></tr>`;}).join("")||`<tr><td colspan="9">לא נמצאו שחקנים</td></tr>`}</tbody></table><p class="muted">מוצגים ${r.length} שחקנים מתוך ${STATS.length}</p>`;},
+ pick(i){const c=this.cmp;const k=c.indexOf(i);if(k>=0)c.splice(k,1);else{c.push(i);if(c.length>2)c.shift();}this.cmpDraw();this.table();},
+ cmpDraw(){const box=$("#stCmp");if(!box)return;const c=this.cmp;
+  if(c.length<2){box.innerHTML=`<div class="card center"><p class="muted">⚖️ השוואה ראש בראש: לחצו על ⚖️ ליד שני שחקנים בטבלה${c.length?`<br>נבחר: <b>${STATS[c[0]][0]}</b>, בחרו עוד אחד`:""}</p></div>`;return;}
+  const A=STATS[c[0]],B=STATS[c[1]];
+  const rows=[["נק׳ למשחק",3,35,1],["ריבאונדים",4,25,1],["אסיסטים",5,12,1],["אליפויות",6,11,0],["תארי MVP",7,6,0]];
+  box.innerHTML=`<div class="card pop"><div class="cnames"><span>${A[0]}</span><span>⚖️</span><span style="color:#4da3ff">${B[0]}</span></div>${rows.map(([l,k,mx,f])=>{
+   const fa=(A[8]&&f?"≈":"")+(f?A[k].toFixed(1):A[k]),fb=(B[8]&&f?"≈":"")+(f?B[k].toFixed(1):B[k]);
+   return `<div class="cr"><div><div class="cv ${A[k]>B[k]?"win":""}">${fa}</div><div class="cb"><i style="width:${Math.min(100,A[k]/mx*100)}%"></i></div></div><b>${l}</b><div><div class="cv ${B[k]>A[k]?"win":""}">${fb}</div><div class="cb b"><i style="width:${Math.min(100,B[k]/mx*100)}%"></i></div></div></div>`;}).join("")}
+  <div class="row"><button class="btn ghost small" onclick="Stats.cmp=[];Stats.cmpDraw();Stats.table()">נקו השוואה</button></div></div>`;}
+};
+
+/* ============ אודות ============ */
+function renderAbout(){
+  $("#aboutBox").innerHTML=`<div class="card center"><div class="big">🏀</div><h3>על האתר</h3>
+  <p class="lead">זה אתר חובבים פשוט שנוצר על ידי גל וקלוד.</p>
+  <p>האתר נבנה מאהבה לכדורסל, בשביל כל מי שרוצה לשחק, ללמוד ולגלות דברים על ה-NBA ועל השחקנים הגדולים בהיסטוריה.</p>
+  <p class="muted">יש בו חידונים, משחקים וטבלאות סטטיסטיקה של 100 שחקנים. הסמלים והתמונות במשחק הזיהוי הם רכושם של בעליהם ומוצגים כאן לשעשוע וללמידה בלבד. האתר אינו רשמי ואין לו קשר ל-NBA או לקבוצות. הנתונים עלולים להכיל טעויות קטנות, ולכן כדאי לאמת אותם לפני שמשתמשים בהם בעבודה, למשל באתר basketball-reference.com.</p>
+  <div class="row"><button class="btn" onclick="go('home')">🏠 חזרה לדף הבית</button></div></div>`;
+}
+
+/* ============ פרופיל ============ */
+function renderProfile(){
+  const l=lvl(),B=save.best;
+  const rows=[["חידון (ניקוד)",B.trivia],["נחש את הקבוצה/השחקן",B.guess],["נכון/לא נכון",B.tf],["מי זה השחקן",B.who],["גבוה/נמוך: נקודות",B.hol_pts],["גבוה/נמוך: אליפויות",B.hol_tit],["גבוה/נמוך: MVP",B.hol_mvp],["זיכרון (מהלכים, פחות=טוב)",B.mem],["ציר הזמן (מתוך 20)",B.tl],["תלייה (רצף)",B.hang],["קליעה: עונשין",B.shoot_ft],["קליעה: קשת",B.shoot_three],["קליעה: חצי מגרש",B.shoot_half]];
+  $("#profileBox").innerHTML=`<div class="card center"><div class="big">🏅</div><h3>דרגה ${l}: ${TITLES[Math.min(TITLES.length-1,l-1)]}</h3><p>${save.xp} XP · ${save.plays} משחקים</p><p class="muted">עוד ${150-(save.xp%150)} XP לדרגה הבאה</p></div>
+  <div class="card"><h3>🏆 הישגים (${Object.keys(save.ach).length}/${ACH.length})</h3><div class="ach">${ACH.map(a=>`<div class="ac ${save.ach[a.id]?"":"lock"}"><div class="i">${a.i}</div><b>${a.n}</b><br><small>${a.d}</small></div>`).join("")}</div></div>
+  <div class="card"><h3>📊 השיאים שלי</h3><table>${rows.map(r=>`<tr><td>${r[0]}</td><td><b>${r[1]===undefined?"-":r[1]}</b></td></tr>`).join("")}</table></div>
+  <div class="row"><button class="btn ghost small" onclick="resetAll()">🗑️ איפוס כל ההתקדמות</button></div>`;
+}
+function resetAll(){if(confirm("בטוחים? כל ה-XP, השיאים וההישגים יימחקו.")){save={xp:0,best:{},ach:{},plays:0};persist();renderHeader();renderProfile();}}
+
+/* ============ הפעלה ============ */
+renderHeader();
+go("home");
+</script>
+</body>
+</html>
