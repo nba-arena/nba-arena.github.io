@@ -126,6 +126,8 @@ def main():
         except Exception:
             old = []
 
+    before = json.dumps(old, ensure_ascii=False)  # צילום של המצב לפני השינויים
+
     # תיקון חד-פעמי לכתבות שנשמרו לפני תיקון השעה
     fixes = {f["name"]: f.get("fix_hours", 0) for f in FEEDS}
     now = datetime.now(timezone.utc)
@@ -143,7 +145,7 @@ def main():
     items.sort(key=lambda i: parse_date_iso(i["date"]), reverse=True)
     items = items[:MAX_ITEMS]
 
-    if items == old:
+    if json.dumps(items, ensure_ascii=False) == before:
         print("אין כתבות חדשות.")
         return 0
 
