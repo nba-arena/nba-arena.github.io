@@ -11,7 +11,8 @@ from email.utils import parsedate_to_datetime
 # ===== מקורות: אפשר להוסיף כאן עוד פידים בעתיד =====
 FEEDS = [
     {"name": "ynet", "url": "https://www.ynet.co.il/Integration/StoryRss3.xml"},
-    {"name": "וואלה", "url": "https://rss.walla.co.il/feed/7"},
+    # בוואלה השעה שכתובה מקדימה ב-3 שעות (כתוב GMT, אבל זה בעצם GMT+3)
+    {"name": "וואלה", "url": "https://rss.walla.co.il/feed/7", "fix_hours": 3},
     {"name": "מעריב", "url": "https://www.maariv.co.il/Rss/RssFeedsSport"},
 ]
 
@@ -63,14 +64,16 @@ def is_nba(text):
     return any(p.search(text) for p in PATTERNS)
 
 
-def parse_date(s):
+def parse_date(s, fix_hours=0):
+    now = datetime.now(timezone.utc)
     try:
         d = parsedate_to_datetime(s)
         if d.tzinfo is None:
             d = d.replace(tzinfo=timezone.utc)
-        return d
+        d = d - timedelta(hours=fix_hours)  # תיקון לאתרים שהשעה שלהם לא נכונה
+        return min(d, now)                   # הגנה: כתבה לא יכולה להיות מהעתיד
     except Exception:
-        return datetime.now(timezone.utc)
+        return now
 
 
 def read_feed(feed):
@@ -94,8 +97,9 @@ def read_feed(feed):
             "summary": summary,
             "link": link,
             "source": feed["name"],
-            "date": parse_date(it.findtext("pubDate") or "").isoformat(),
+            "date": parse_date(it.findtext("pubDate") or "", feed.get("fix_hours", 0)).isoformat(),
             "image": img.group(1) if img and img.group(1).startswith("https") else "",
+            "time_ok": True,
         })
     return items
 
@@ -122,6 +126,15 @@ def main():
         except Exception:
             old = []
 
+    # תיקון חד-פעמי לכתבות שנשמרו לפני תיקון השעה
+    fixes = {f["name"]: f.get("fix_hours", 0) for f in FEEDS}
+    now = datetime.now(timezone.utc)
+    for i in old:
+        if not i.get("time_ok"):
+            d = parse_date_iso(i["date"]) - timedelta(hours=fixes.get(i.get("source"), 0))
+            i["date"] = min(d, now).isoformat()
+            i["time_ok"] = True
+
     by_link = {i["link"]: i for i in old}
     for i in fresh:
         by_link[i["link"]] = i  # גרסה חדשה מחליפה ישנה
@@ -130,7 +143,7 @@ def main():
     items.sort(key=lambda i: parse_date_iso(i["date"]), reverse=True)
     items = items[:MAX_ITEMS]
 
-    if [i["link"] for i in items] == [i["link"] for i in old]:
+    if items == old:
         print("אין כתבות חדשות.")
         return 0
 
