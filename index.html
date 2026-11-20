@@ -846,20 +846,31 @@ const News={
   }
   return null;
  },
+ PAGE:10,
  async render(){
   const box=$("#newsBox");
   box.innerHTML=`<div class="card center"><p class="lead">⏳ טוען חדשות...</p></div>`;
   const d=await this.load();
   if(!d||!d.items||!d.items.length){box.innerHTML=`<div class="card center"><p class="lead">📰 עוד אין כתבות.</p><p class="muted">הרובוט אוסף חדשות כל 3 שעות. נסו שוב מאוחר יותר!</p></div>`;return;}
+  this.d=d;this.shown=this.PAGE;this.draw();
+ },
+ card(i){
   const safe=u=>/^https:\/\//.test(u||"")?u:"";
-  box.innerHTML=`<p class="muted center">כותרות ותקצירים מאתרי הספורט, עם קישור לכתבה המלאה. עודכן ${this.ago(d.updated)}.</p>
-  <div class="news">${d.items.map(i=>`<article class="nw">${safe(i.image)?`<img src="${this.esc(safe(i.image))}" alt="" loading="lazy" onerror="this.remove()">`:""}<div>
+  return `<article class="nw">${safe(i.image)?`<img src="${this.esc(safe(i.image))}" alt="" loading="lazy" onerror="this.remove()">`:""}<div>
    <h3>${this.esc(i.title)}</h3>
    <div class="nwMeta">${this.esc(i.source)} · ${this.ago(i.date)}</div>
    ${i.summary?`<p>${this.esc(i.summary)}</p>`:""}
    ${safe(i.link)?`<a class="nwGo" href="${this.esc(safe(i.link))}" target="_blank" rel="noopener">👉 לכתבה המלאה ב-${this.esc(i.source)}</a>`:""}
-  </div></article>`).join("")}</div>`;
- }
+  </div></article>`;
+ },
+ draw(){
+  const items=this.d.items,n=Math.min(this.shown,items.length),left=items.length-n;
+  $("#newsBox").innerHTML=`<p class="muted center">כותרות ותקצירים מאתרי הספורט, עם קישור לכתבה המלאה. עודכן ${this.ago(this.d.updated)}.</p>
+  <div class="news">${items.slice(0,n).map(i=>this.card(i)).join("")}</div>
+  <p class="muted center">מוצגות ${n} מתוך ${items.length} כתבות</p>
+  ${left>0?`<div class="row"><button class="btn" onclick="News.more()">עוד כתבות ⬇️ (${Math.min(this.PAGE,left)})</button></div>`:""}`;
+ },
+ more(){this.shown+=this.PAGE;this.draw();}
 };
 function renderAbout(){
   $("#aboutBox").innerHTML=`<div class="card center"><div class="big">🏀</div><h3>על האתר</h3>
