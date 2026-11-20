@@ -141,6 +141,15 @@ table.st{min-width:680px}
 .gzMask i.off{opacity:0;transform:scale(.4);pointer-events:none}
 .gzKind{display:inline-block;background:var(--card2);border:1px solid var(--line);border-radius:99px;padding:3px 14px;font-size:.85rem;color:var(--ac2);font-weight:700}
 @media(max-width:560px){.opts,.hol{grid-template-columns:1fr}.hero h1{font-size:1.7rem}.mem{gap:6px}.lv{min-width:110px}.logo{font-size:1.2rem}.menuBtn{padding:7px 10px}.cr,.cnames{grid-template-columns:1fr 64px 1fr}.gz{width:220px;height:220px}}
+.news{display:grid;gap:14px}
+.nw{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:flex-start}
+.nw img{width:110px;height:74px;object-fit:cover;border-radius:10px;flex-shrink:0;background:var(--card2)}
+.nw h3{margin:0 0 6px;font-size:1.08rem;line-height:1.4}
+.nw p{margin:0 0 10px;color:var(--mut);line-height:1.6}
+.nwMeta{font-size:.85rem;color:var(--mut);margin-bottom:8px}
+.nwGo{color:var(--ac2);font-weight:700;text-decoration:none}
+.nwGo:hover{text-decoration:underline}
+@media(max-width:560px){.nw{flex-direction:column}.nw img{width:100%;height:160px}}
 </style>
 </head>
 <body>
@@ -155,6 +164,7 @@ table.st{min-width:680px}
   </div>
   <nav class="menu" id="menu">
     <button onclick="go('home')">🏠 בית</button>
+    <button onclick="go('news')">📰 חדשות NBA</button>
     <button onclick="go('stats')">📊 טבלאות סטטיסטיקה</button>
     <button onclick="go('profile')">🏅 הפרופיל שלי</button>
     <button onclick="go('about')">ℹ️ אודות</button>
@@ -381,7 +391,7 @@ const FACTS=[
 ];
 
 /* ============ ניווט ============ */
-const VIEWS=[["trivia","🧠","חידון ענק","65 שאלות ב-6 נושאים, שעון ו-50:50"],["guess","🔍","נחש את הקבוצה/השחקן","סמל או תמונה מוסתרים חלקית"],["tf","⚡","נכון / לא נכון","45 שניות, 3 חיים, כמה תצליחו?"],["who","🕵️","מי זה השחקן?","נחשו לפי רמזים. פחות רמזים = יותר נקודות"],["hol","📈","גבוה או נמוך","מי עם יותר נקודות/אליפויות/MVP?"],["mem","🧩","משחק זיכרון","התאימו עיר לקבוצה"],["tl","⏳","ציר הזמן","סדרו אירועי NBA לפי שנה"],["hang","🔤","תלייה NBA","נחשו שחקנים וקבוצות באותיות"],["shoot","🎯","אתגר הקליעה","עצרו את המחוון באזור הירוק"],["draft","👑","בנה חמישייה","בחרו אגדות ונצחו קבוצות היסטוריות"],["stats","📊","טבלאות סטטיסטיקה","100 שחקנים: מיון, חיפוש והשוואה"],["profile","🏅","הפרופיל שלי","דרגה, שיאים והישגים"],["about","ℹ️","אודות","מי יצר את האתר"]];
+const VIEWS=[["news","📰","חדשות NBA","הכתבות האחרונות מאתרי הספורט"],["trivia","🧠","חידון ענק","65 שאלות ב-6 נושאים, שעון ו-50:50"],["guess","🔍","נחש את הקבוצה/השחקן","סמל או תמונה מוסתרים חלקית"],["tf","⚡","נכון / לא נכון","45 שניות, 3 חיים, כמה תצליחו?"],["who","🕵️","מי זה השחקן?","נחשו לפי רמזים. פחות רמזים = יותר נקודות"],["hol","📈","גבוה או נמוך","מי עם יותר נקודות/אליפויות/MVP?"],["mem","🧩","משחק זיכרון","התאימו עיר לקבוצה"],["tl","⏳","ציר הזמן","סדרו אירועי NBA לפי שנה"],["hang","🔤","תלייה NBA","נחשו שחקנים וקבוצות באותיות"],["shoot","🎯","אתגר הקליעה","עצרו את המחוון באזור הירוק"],["draft","👑","בנה חמישייה","בחרו אגדות ונצחו קבוצות היסטוריות"],["stats","📊","טבלאות סטטיסטיקה","100 שחקנים: מיון, חיפוש והשוואה"],["profile","🏅","הפרופיל שלי","דרגה, שיאים והישגים"],["about","ℹ️","אודות","מי יצר את האתר"]];
 $("#app").innerHTML=`<section class="view" id="home"><div id="homeBox"></div></section>`+VIEWS.map(([id,ic,t])=>`<section class="view" id="${id}"><div class="top"><button class="back" onclick="go('home')">→ חזרה</button><h2>${ic} ${t}</h2></div><div id="${id}Box"></div></section>`).join("");
 
 function go(id){
@@ -389,7 +399,7 @@ function go(id){
   closeMenu();
   $$(".view").forEach(v=>v.classList.toggle("active",v.id===id));
   window.scrollTo({top:0});
-  const init={home:renderHome,trivia:()=>Trivia.menu(),guess:()=>Guess.menu(),tf:()=>TF.menu(),who:()=>Who.menu(),hol:()=>HoL.menu(),mem:()=>Mem.menu(),tl:()=>TL.menu(),hang:()=>Hang.menu(),shoot:()=>Shoot.menu(),draft:()=>Draft.menu(),profile:renderProfile,stats:()=>Stats.render(),about:renderAbout}[id];
+  const init={home:renderHome,news:()=>News.render(),trivia:()=>Trivia.menu(),guess:()=>Guess.menu(),tf:()=>TF.menu(),who:()=>Who.menu(),hol:()=>HoL.menu(),mem:()=>Mem.menu(),tl:()=>TL.menu(),hang:()=>Hang.menu(),shoot:()=>Shoot.menu(),draft:()=>Draft.menu(),profile:renderProfile,stats:()=>Stats.render(),about:renderAbout}[id];
   init&&init();
 }
 function renderHome(){
@@ -825,6 +835,32 @@ const Stats={
 };
 
 /* ============ אודות ============ */
+/* ============ חדשות NBA ============ */
+const News={
+ url:"https://raw.githubusercontent.com/nba-arena/nba-arena.github.io/main/news.json",
+ esc(t){return String(t||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));},
+ ago(iso){const m=Math.round((Date.now()-new Date(iso))/60000);if(isNaN(m))return"";if(m<60)return`לפני ${Math.max(m,1)} דקות`;const h=Math.round(m/60);if(h<24)return h===1?"לפני שעה":`לפני ${h} שעות`;const d=Math.round(h/24);return d===1?"אתמול":`לפני ${d} ימים`;},
+ async load(){
+  for(const u of [this.url+"?t="+Date.now(),"news.json?t="+Date.now()]){
+   try{const r=await fetch(u,{cache:"no-store"});if(r.ok)return await r.json();}catch(e){}
+  }
+  return null;
+ },
+ async render(){
+  const box=$("#newsBox");
+  box.innerHTML=`<div class="card center"><p class="lead">⏳ טוען חדשות...</p></div>`;
+  const d=await this.load();
+  if(!d||!d.items||!d.items.length){box.innerHTML=`<div class="card center"><p class="lead">📰 עוד אין כתבות.</p><p class="muted">הרובוט אוסף חדשות כל 3 שעות. נסו שוב מאוחר יותר!</p></div>`;return;}
+  const safe=u=>/^https:\/\//.test(u||"")?u:"";
+  box.innerHTML=`<p class="muted center">כותרות ותקצירים מאתרי הספורט, עם קישור לכתבה המלאה. עודכן ${this.ago(d.updated)}.</p>
+  <div class="news">${d.items.map(i=>`<article class="nw">${safe(i.image)?`<img src="${this.esc(safe(i.image))}" alt="" loading="lazy" onerror="this.remove()">`:""}<div>
+   <h3>${this.esc(i.title)}</h3>
+   <div class="nwMeta">${this.esc(i.source)} · ${this.ago(i.date)}</div>
+   ${i.summary?`<p>${this.esc(i.summary)}</p>`:""}
+   ${safe(i.link)?`<a class="nwGo" href="${this.esc(safe(i.link))}" target="_blank" rel="noopener">👉 לכתבה המלאה ב-${this.esc(i.source)}</a>`:""}
+  </div></article>`).join("")}</div>`;
+ }
+};
 function renderAbout(){
   $("#aboutBox").innerHTML=`<div class="card center"><div class="big">🏀</div><h3>על האתר</h3>
   <p class="lead">זה אתר חובבים פשוט שנוצר על ידי גל וקלוד.</p>
