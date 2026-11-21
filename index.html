@@ -12,7 +12,10 @@ body{margin:0;font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;backgro
 .hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:rgba(10,15,31,.85);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
 .logo{font-size:1.5rem;font-weight:800;cursor:pointer;letter-spacing:.5px}
 .logo b{color:var(--ac)}
-.lv{cursor:pointer;min-width:150px}
+.lv{cursor:pointer;min-width:190px}
+.lvRow{display:flex;align-items:center;gap:10px}
+.lvMain{flex:1;min-width:0}
+.lvName{font-size:.85rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
 .lvTop{display:flex;justify-content:space-between;font-size:.8rem;color:var(--mut);margin-bottom:4px;gap:10px}
 .xpBar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden}
 .xpBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .5s}
@@ -150,22 +153,68 @@ table.st{min-width:680px}
 .nwGo{color:var(--ac2);font-weight:700;text-decoration:none}
 .nwGo:hover{text-decoration:underline}
 @media(max-width:560px){.nw{flex-direction:column}.nw img{width:100%;height:160px}}
+
+/* --- עיצוב אישי --- */
+#bgArt{position:fixed;inset:0;z-index:-1;display:none;background:var(--bg);overflow:hidden}
+#bgArt .img{position:absolute;inset:0;background-repeat:no-repeat;background-position:center}
+#bgArt.ph .img{background-size:cover;background-position:center 20%;filter:blur(3px);transform:scale(1.06)}
+#bgArt.lg .img{background-size:min(80vmin,680px)}
+#bgArt .shade{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(10,15,31,.74) 0,rgba(10,15,31,.9) 70%,rgba(10,15,31,.96) 100%)}
+body.hasBg{background:var(--bg)}
+body.hasBg #bgArt{display:block}
+body.hasBg .hero{background:rgba(20,27,52,.92)}
+body.hasBg .top h2,body.hasBg main .muted{text-shadow:0 1px 4px #000,0 0 10px #000}
+body.hasBg footer{text-shadow:0 1px 4px #000,0 0 10px #000;color:#b4bde4}
+.av{width:36px;height:36px;border-radius:50%;background:#fff;object-fit:contain;padding:3px;border:2px solid var(--ac);flex-shrink:0;display:inline-grid;place-items:center}
+.av.ph{object-fit:cover;object-position:center 15%;padding:0}
+.av.none{background:var(--card2);font-size:1.1rem;padding:0}
+.av.big{width:88px;height:88px;border-width:3px}
+.av.big.none{font-size:2.6rem}
+.av.big:not(.ph):not(.none){padding:8px}
+.meHead{display:flex;align-items:center;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+.meHead h3{margin:0}
+.pk{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.pi{position:relative;background:var(--card2);border:2px solid var(--line);border-radius:14px;padding:8px 6px;cursor:pointer;color:var(--txt);font-family:inherit;font-size:.78rem;line-height:1.3;text-align:center}
+.pi .th{width:100%;aspect-ratio:1/1;border-radius:10px;background-color:#fff;background-position:center;background-repeat:no-repeat;background-size:82%;margin-bottom:6px;display:grid;place-items:center;font-size:2rem}
+.pi .th.ph{background-size:cover;background-position:center 15%}
+.pi .th.def{background:var(--bg)}
+.pi:hover:not(.lock){border-color:var(--ac);transform:translateY(-2px)}
+.pi.on{border-color:var(--ac);background:#2a2440;box-shadow:0 0 0 2px var(--ac2)}
+.pi.on::after{content:"✓";position:absolute;top:4px;left:6px;background:var(--ac);color:#fff;border-radius:50%;width:22px;height:22px;display:grid;place-items:center;font-weight:800;font-size:.8rem}
+.pi.lock{cursor:not-allowed;opacity:.8}
+.pi.lock .th{filter:grayscale(1) brightness(.3)}
+.pi .lk{position:absolute;top:8px;right:6px;left:6px;aspect-ratio:1/1;display:grid;place-items:center;font-size:1.7rem}
+.pi small{display:block;color:var(--ac2);font-weight:700}
+/* --- נחש לפי הסטטיסטיקה --- */
+.sgGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0 12px}
+.sgB{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 4px;text-align:center}
+.sgB .v{font-size:1.7rem;font-weight:800;color:var(--ac2);line-height:1.2}
+.sgB small{color:var(--mut)}
+.hints{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:10px;margin:0 0 12px}
+.hint{background:var(--card2);border:1px dashed var(--ac);border-radius:99px;padding:4px 14px;font-weight:700;animation:pop .3s}
+.lvT{}
+@media(max-width:560px){.sgGrid{grid-template-columns:repeat(3,1fr)}.hdr{padding:10px 12px;gap:8px}.hl{gap:8px}.menuBtn,.logo{white-space:nowrap}.lv{min-width:0;flex:1;max-width:150px}.lvT{display:none}.lvTop{font-size:.68rem;white-space:nowrap;gap:4px}.logo{font-size:1.08rem}.menuBtn{padding:7px 9px}.lvName{font-size:.78rem}.av{width:30px;height:30px}.lvRow{gap:6px}.pk{grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}}
 </style>
 </head>
 <body>
+<div id="bgArt"><div class="img"></div><div class="shade"></div></div>
 <header class="hdr">
   <div class="hl">
     <button class="menuBtn" onclick="toggleMenu(event)" aria-label="תפריט">☰ תפריט</button>
     <div class="logo" onclick="go('home')">🏀 NBA <b>ארנה</b></div>
   </div>
   <div class="lv" onclick="go('profile')" title="הפרופיל שלי">
+    <div class="lvRow"><span id="hdrAv"></span><div class="lvMain">
+    <div class="lvName" id="hdrName"></div>
     <div class="lvTop"><span id="lvl"></span><span id="xpTxt"></span></div>
     <div class="xpBar"><i id="xpFill"></i></div>
+    </div></div>
   </div>
   <nav class="menu" id="menu">
     <button onclick="go('home')">🏠 בית</button>
     <button onclick="go('news')">📰 חדשות NBA</button>
     <button onclick="go('stats')">📊 טבלאות סטטיסטיקה</button>
+    <button onclick="go('me')">🎨 עיצוב אישי</button>
     <button onclick="go('profile')">🏅 הפרופיל שלי</button>
     <button onclick="go('about')">ℹ️ אודות</button>
   </nav>
@@ -207,12 +256,15 @@ const ACH=[
  {id:"time16",i:"⏳",n:"מכונת זמן",d:"16 נקודות בציר הזמן"},
  {id:"hang5",i:"🔤",n:"מלך המילים",d:"5 מילים ברצף בתלייה"},
  {id:"draft_win",i:"👑",n:"מאמן השנה",d:"נצחו בבנה חמישייה"},
+ {id:"stat8",i:"📊",n:"סטטיסטיקאי",d:"8 ברצף בנחש לפי הסטטיסטיקה"},
+ {id:"stat5clean",i:"🧮",n:"קורא מספרים",d:"5 ברצף בלי אף רמז בנחש לפי הסטטיסטיקה"},
  {id:"lvl5",i:"⭐",n:"אול-סטאר",d:"הגיעו לדרגה 5"}
 ];
 function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;$("#toasts").appendChild(t);setTimeout(()=>t.remove(),2600);}
-function renderHeader(){const l=lvl();$("#lvl").textContent="דרגה "+l+" · "+TITLES[Math.min(TITLES.length-1,l-1)];$("#xpTxt").textContent=save.xp+" XP";$("#xpFill").style.width=((save.xp%150)/150*100)+"%";}
+function renderHeader(){const l=lvl();$("#hdrAv").innerHTML=avHTML();$("#hdrName").textContent=meName();applyBg();$("#lvl").innerHTML="דרגה "+l+'<span class="lvT"> · '+TITLES[Math.min(TITLES.length-1,l-1)]+"</span>";$("#xpTxt").textContent=save.xp+" XP";$("#xpFill").style.width=((save.xp%150)/150*100)+"%";}
 function unlock(id){if(save.ach[id])return;save.ach[id]=1;persist();const a=ACH.find(x=>x.id===id);toast("🏆 הישג חדש: "+a.n);}
-function addXP(n){if(n<=0)return;save.xp+=n;persist();renderHeader();toast("+"+n+" XP");if(lvl()>=5)unlock("lvl5");}
+function addXP(n){if(n<=0)return;const before=lvl();save.xp+=n;persist();renderHeader();toast("+"+n+" XP");if(lvl()>=5)unlock("lvl5");
+ const now=lvl();if(now>before){toast("⬆️ עליתם לדרגה "+now+"!");if(ME_ITEMS.some(x=>x.req>before&&x.req<=now))toast("🎨 נפתחו תמונות ורקעים חדשים בעיצוב אישי!");}}
 function setBest(k,v,low){const o=save.best[k];if(o===undefined||(low?v<o:v>o)){save.best[k]=v;persist();return true;}return false;}
 function finish(xp){save.plays++;unlock("first");if(save.plays>=10)unlock("plays10");persist();addXP(xp);}
 function resultHTML(e,t,lines,btns){return `<div class="card center pop"><div class="big">${e}</div><h3>${t}</h3>${lines.map(l=>`<p>${l}</p>`).join("")}<div class="row">${btns}</div></div>`;}
@@ -365,6 +417,34 @@ const GUESS_PLAYERS=[
 ["טים דאנקן","https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Tim_Duncan.jpg/500px-Tim_Duncan.jpg"],
 ["קווין דוראנט","https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Kevin_Durant_Interview_in_2023_-_2.png/500px-Kevin_Durant_Interview_in_2023_-_2.png"]
 ];
+
+/* ============ עיצוב אישי: סמלים נוספים, פריטים ושמירה ============ */
+const EXTRA_TEAMS=[
+["פורטלנד טרייל בלייזרס","https://thumb.wikimedia.org/wikipedia/he/thumb/5/5d/Portland_Trail_Blazers_New_logo.svg/500px-Portland_Trail_Blazers_New_logo.svg.png"],
+["ברוקלין נטס","https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Brooklyn_Nets_newlogo.svg/500px-Brooklyn_Nets_newlogo.svg.png"],
+["מילווקי באקס","https://thumb.wikimedia.org/wikipedia/en/thumb/4/4a/Milwaukee_Bucks_logo.svg/500px-Milwaukee_Bucks_logo.svg.png"]
+];
+/* סדר הפתיחה: 7 פריטים פתוחים מההתחלה, ועוד 3 בכל דרגה (דרגות 2 עד 7) */
+const ME_ITEMS=(()=>{
+ const T=Object.fromEntries([...GUESS_TEAMS,...EXTRA_TEAMS]),P=Object.fromEntries(GUESS_PLAYERS);
+ const order=[["t","לוס אנג'לס לייקרס"],["t","בוסטון סלטיקס"],["t","גולדן סטייט ווריורס"],["t","ניו יורק ניקס"],["t","פורטלנד טרייל בלייזרס"],["p","סטף קרי"],["p","קווין דוראנט"],
+  ["t","שיקגו בולס"],["t","מיאמי היט"],["t","ברוקלין נטס"],
+  ["t","דאלאס מאבריקס"],["t","דנבר נאגטס"],["p","טים דאנקן"],
+  ["t","טורונטו ראפטורס"],["t","סן אנטוניו ספרס"],["p","קובי בראיינט"],
+  ["t","יוסטון רוקטס"],["t","אוקלהומה סיטי ת'אנדר"],["p","שאקיל או'ניל"],
+  ["t","מילווקי באקס"],["p","מג'יק ג'ונסון"],["p","קארים עבדול-ג'אבר"],
+  ["p","לארי בירד"],["p","לברון ג'יימס"],["p","מייקל ג'ורדן"]];
+ return order.map(([k,n],i)=>({k,n,img:(k==="t"?T:P)[n],req:i<7?1:2+Math.floor((i-7)/3)})).filter(x=>x.img);
+})();
+const ME_KEY="nba_arena_me";
+let me={name:"",av:"",bg:""};
+try{const s=localStorage.getItem(ME_KEY);if(s)me={...me,...JSON.parse(s)};}catch(e){}
+const saveMe=()=>{try{localStorage.setItem(ME_KEY,JSON.stringify(me));}catch(e){}};
+const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const meItem=id=>ME_ITEMS.find(x=>x.n===id&&x.req<=lvl());
+const meName=()=>me.name||"אורח";
+function avHTML(cls){cls=cls||"";const it=meItem(me.av);return it?`<img class="av ${it.k==="p"?"ph":""} ${cls}" src="${esc(it.img)}" alt="">`:`<span class="av none ${cls}">👤</span>`;}
+function applyBg(){const it=meItem(me.bg),el=$("#bgArt");document.body.classList.toggle("hasBg",!!it);if(!it||!el)return;el.className=it.k==="p"?"ph":"lg";el.querySelector(".img").style.backgroundImage=`url("${it.img}")`;}
 /* עובדות */
 const FACTS=[
 "כדורסל הומצא ב-1891 על ידי ג'יימס נייסמית׳, ובהתחלה זרקו לסלי אפרסקים.",
@@ -391,21 +471,21 @@ const FACTS=[
 ];
 
 /* ============ ניווט ============ */
-const VIEWS=[["news","📰","חדשות NBA","הכתבות האחרונות מאתרי הספורט"],["trivia","🧠","חידון ענק","65 שאלות ב-6 נושאים, שעון ו-50:50"],["guess","🔍","נחש את הקבוצה/השחקן","סמל או תמונה מוסתרים חלקית"],["tf","⚡","נכון / לא נכון","45 שניות, 3 חיים, כמה תצליחו?"],["who","🕵️","מי זה השחקן?","נחשו לפי רמזים. פחות רמזים = יותר נקודות"],["hol","📈","גבוה או נמוך","מי עם יותר נקודות/אליפויות/MVP?"],["mem","🧩","משחק זיכרון","התאימו עיר לקבוצה"],["tl","⏳","ציר הזמן","סדרו אירועי NBA לפי שנה"],["hang","🔤","תלייה NBA","נחשו שחקנים וקבוצות באותיות"],["shoot","🎯","אתגר הקליעה","עצרו את המחוון באזור הירוק"],["draft","👑","בנה חמישייה","בחרו אגדות ונצחו קבוצות היסטוריות"],["stats","📊","טבלאות סטטיסטיקה","100 שחקנים: מיון, חיפוש והשוואה"],["profile","🏅","הפרופיל שלי","דרגה, שיאים והישגים"],["about","ℹ️","אודות","מי יצר את האתר"]];
+const VIEWS=[["news","📰","חדשות NBA","הכתבות האחרונות מאתרי הספורט"],["trivia","🧠","חידון ענק","65 שאלות ב-6 נושאים, שעון ו-50:50"],["guess","🔍","נחש את הקבוצה/השחקן","סמל או תמונה מוסתרים חלקית"],["tf","⚡","נכון / לא נכון","45 שניות, 3 חיים, כמה תצליחו?"],["who","🕵️","מי זה השחקן?","נחשו לפי רמזים. פחות רמזים = יותר נקודות"],["hol","📈","גבוה או נמוך","מי עם יותר נקודות/אליפויות/MVP?"],["mem","🧩","משחק זיכרון","התאימו עיר לקבוצה"],["tl","⏳","ציר הזמן","סדרו אירועי NBA לפי שנה"],["hang","🔤","תלייה NBA","נחשו שחקנים וקבוצות באותיות"],["shoot","🎯","אתגר הקליעה","עצרו את המחוון באזור הירוק"],["draft","👑","בנה חמישייה","בחרו אגדות ונצחו קבוצות היסטוריות"],["sg","🔢","נחש לפי הסטטיסטיקה","רק מספרים. תזהו מי השחקן?"],["stats","📊","טבלאות סטטיסטיקה","100 שחקנים: מיון, חיפוש והשוואה"],["me","🎨","עיצוב אישי","שם משתמש, תמונה ורקע"],["profile","🏅","הפרופיל שלי","דרגה, שיאים והישגים"],["about","ℹ️","אודות","מי יצר את האתר"]];
 $("#app").innerHTML=`<section class="view" id="home"><div id="homeBox"></div></section>`+VIEWS.map(([id,ic,t])=>`<section class="view" id="${id}"><div class="top"><button class="back" onclick="go('home')">→ חזרה</button><h2>${ic} ${t}</h2></div><div id="${id}Box"></div></section>`).join("");
 
 function go(id){
-  [Trivia,TF,Mem,Shoot,Hang,Guess].forEach(m=>m.stop&&m.stop());
+  [Trivia,TF,Mem,Shoot,Hang,Guess,SG].forEach(m=>m.stop&&m.stop());
   closeMenu();
   $$(".view").forEach(v=>v.classList.toggle("active",v.id===id));
   window.scrollTo({top:0});
-  const init={home:renderHome,news:()=>News.render(),trivia:()=>Trivia.menu(),guess:()=>Guess.menu(),tf:()=>TF.menu(),who:()=>Who.menu(),hol:()=>HoL.menu(),mem:()=>Mem.menu(),tl:()=>TL.menu(),hang:()=>Hang.menu(),shoot:()=>Shoot.menu(),draft:()=>Draft.menu(),profile:renderProfile,stats:()=>Stats.render(),about:renderAbout}[id];
+  const init={home:renderHome,news:()=>News.render(),trivia:()=>Trivia.menu(),guess:()=>Guess.menu(),tf:()=>TF.menu(),who:()=>Who.menu(),hol:()=>HoL.menu(),mem:()=>Mem.menu(),tl:()=>TL.menu(),hang:()=>Hang.menu(),shoot:()=>Shoot.menu(),draft:()=>Draft.menu(),sg:()=>SG.menu(),me:()=>Me.render(),profile:renderProfile,stats:()=>Stats.render(),about:renderAbout}[id];
   init&&init();
 }
 function renderHome(){
-  $("#homeBox").innerHTML=`<div class="hero"><h1>🏀 ברוכים הבאים ל-NBA ארנה</h1><p>חידונים, משחקים ואתגרים לאוהדי הכדורסל. צברו XP, עלו דרגות ופתחו הישגים!</p></div>
+  $("#homeBox").innerHTML=`<div class="hero"><div class="meHead">${avHTML("big")}<h1>שלום, ${esc(meName())}! 🏀</h1></div><p>ברוכים הבאים ל-NBA ארנה: חידונים, משחקים ואתגרים לאוהדי הכדורסל. צברו XP, עלו דרגות ופתחו הישגים!</p>${me.name?"":`<div class="row"><button class="btn ghost small" onclick="go('me')">🎨 בחרו שם משתמש ותמונה</button></div>`}</div>
   <div class="card fact"><p id="factTxt">💡 ${FACTS[ri(FACTS.length)]}</p><button class="btn ghost small" onclick="newFact()">עוד עובדה</button></div>
-  <div class="grid">${VIEWS.filter(v=>v[0]!=="profile"&&v[0]!=="about").map(([id,ic,t,d])=>`<div class="gc" onclick="go('${id}')"><div class="ic">${ic}</div><h3>${t}</h3><p>${d}</p></div>`).join("")}</div>
+  <div class="grid">${VIEWS.filter(v=>!["profile","about","me"].includes(v[0])).map(([id,ic,t,d])=>`<div class="gc" onclick="go('${id}')"><div class="ic">${ic}</div><h3>${t}</h3><p>${d}</p></div>`).join("")}</div>
   <div class="row"><button class="btn ghost" onclick="go('profile')">🏅 הפרופיל וההישגים שלי</button></div>`;
 }
 function newFact(){$("#factTxt").textContent="💡 "+FACTS[ri(FACTS.length)];}
@@ -834,6 +914,62 @@ const Stats={
   <div class="row"><button class="btn ghost small" onclick="Stats.cmp=[];Stats.cmpDraw();Stats.table()">נקו השוואה</button></div></div>`;}
 };
 
+/* ============ נחש לפי הסטטיסטיקה ============ */
+const SG={
+ s:null,ROUNDS:10,
+ stop(){this.s=null;},
+ menu(){this.s=null;$("#sgBox").innerHTML=`<div class="card center">
+  <p class="lead">מוצגים רק המספרים של שחקן: נקודות, ריבאונדים ואסיסטים בממוצע לקריירה, אליפויות ותארי MVP. מי השחקן?</p>
+  <p class="muted">10 סיבובים, ניחוש אחד בכל סיבוב. תשובה נכונה שווה 30 נקודות. אפשר לפתוח רמז (עמדה או שנות קריירה), וכל רמז מוריד 10.</p>
+  <p class="muted">הישגים: 📊 סטטיסטיקאי (8 ברצף) · 🧮 קורא מספרים (5 ברצף בלי אף רמז)</p>
+  <p class="muted">השיא שלכם: ${save.best.sg||0} נקודות מתוך 300</p>
+  <button class="btn" onclick="SG.start()">מתחילים</button></div>`;},
+ start(){this.s={list:pick(STATS,this.ROUNDS),r:0,total:0,streak:0,clean:0,best:0,ok:0};this.round();},
+ round(){const s=this.s,p=s.list[s.r];s.opts=shuffle([p,...pick(STATS.filter(x=>x!==p),3)]);s.h={pos:false,yrs:false};s.res=null;s.pk=-1;s.gain=0;this.draw();},
+ value(){const h=this.s.h;return 30-(h.pos?10:0)-(h.yrs?10:0);},
+ draw(){const s=this.s,p=s.list[s.r],a=p[8]?"≈":"";
+  const box=(v,l)=>`<div class="sgB"><div class="v">${v}</div><small>${l}</small></div>`;
+  const showPos=s.h.pos||s.res,showYrs=s.h.yrs||s.res;
+  $("#sgBox").innerHTML=`<div class="card">
+  <div class="stats"><span>סיבוב ${s.r+1}/${s.list.length}</span><span>⭐ ${s.total}</span><span>🔥 ${s.streak}</span><span>שווי: ${this.value()}</span></div>
+  <p class="center" style="margin:4px 0 0;font-weight:700">מי השחקן עם המספרים האלה?</p>
+  <div class="sgGrid">${box(a+p[3].toFixed(1),"נקודות")}${box(a+p[4].toFixed(1),"ריבאונדים")}${box(a+p[5].toFixed(1),"אסיסטים")}${box(p[6],"אליפויות")}${box(p[7],"MVP")}</div>
+  ${p[8]?`<p class="muted center" style="margin:-4px 0 10px">≈ מספר משוער, כי השחקן עדיין משחק</p>`:""}
+  <div class="hints">${showPos?`<span class="hint">🧍 ${p[1]} · ${POSN[p[1]]}</span>`:""}${showYrs?`<span class="hint">📅 ${p[2]}</span>`:""}</div>
+  <div class="opts">${s.opts.map((o,k)=>`<button class="opt ${s.res&&o===p?"correct":""} ${s.res&&k===s.pk&&o!==p?"wrong":""}" ${s.res?"disabled":""} onclick="SG.guess(${k})">${o[0]}</button>`).join("")}</div>
+  <div class="fb ${s.res==="win"?"ok":"no"}">${s.res==="win"?"✅ נכון! +"+s.gain:s.res==="lose"?"❌ זה היה "+p[0]:""}</div>
+  <div class="center">${s.res?"":(s.h.pos?"":`<button class="btn ghost small" onclick="SG.hint('pos')">🧍 רמז: עמדה (-10)</button> `)+(s.h.yrs?"":`<button class="btn ghost small" onclick="SG.hint('yrs')">📅 רמז: שנות קריירה (-10)</button>`)}</div></div>`;},
+ hint(k){const s=this.s;if(!s||s.res||s.h[k])return;s.h[k]=true;this.draw();},
+ guess(k){const s=this.s;if(!s||s.res)return;const p=s.list[s.r],used=s.h.pos||s.h.yrs;s.pk=k;
+  if(s.opts[k]===p){s.gain=this.value();s.total+=s.gain;s.ok++;s.streak++;s.best=Math.max(s.best,s.streak);s.clean=used?0:s.clean+1;
+   if(s.streak>=8)unlock("stat8");if(s.clean>=5)unlock("stat5clean");s.res="win";}
+  else{s.streak=0;s.clean=0;s.res="lose";}
+  this.draw();this.next();},
+ next(){const s=this.s,wait=s.res==="win"?1600:2400;setTimeout(()=>{if(this.s!==s)return;s.r++;s.r<s.list.length?this.round():this.end();},wait);},
+ end(){const s=this.s;const xp=Math.round(s.total/2);const nb=setBest("sg",s.total);finish(xp);
+  $("#sgBox").innerHTML=resultHTML(s.ok>=8?"🏆":s.ok>=5?"👏":"🔢","סיימתם את הסטטיסטיקה",
+   [`ענו נכון על ${s.ok} מתוך ${s.list.length}`,`ניקוד: ${s.total} מתוך 300${nb?" (שיא חדש! 🎉)":""}`,`רצף הכי ארוך: ${s.best}`,`+${xp} XP`],
+   `<button class="btn" onclick="SG.start()">שוב</button><button class="btn ghost" onclick="go('home')">לתפריט</button>`);}
+};
+
+/* ============ עיצוב אישי: המסך ============ */
+const Me={
+ render(){
+  const L=lvl(),open=ME_ITEMS.filter(x=>x.req<=L).length,nxt=ME_ITEMS.filter(x=>x.req>L).map(x=>x.req)[0];
+  const lockLine=nxt?`פתוחים ${open} מתוך ${ME_ITEMS.length}. הבאים נפתחים בדרגה ${nxt} (עוד ${(nxt-1)*150-save.xp} XP).`:`כל ${ME_ITEMS.length} הפריטים פתוחים! 🎉`;
+  const grid=f=>`<div class="pk"><button class="pi ${!meItem(me[f])?"on":""}" onclick="Me.set('${f}',-1)"><div class="th def">${f==="av"?"👤":"🏀"}</div>${f==="av"?"בלי תמונה":"רקע רגיל"}</button>${
+   ME_ITEMS.map((x,i)=>{const lk=x.req>L;return `<button class="pi ${!lk&&me[f]===x.n?"on":""} ${lk?"lock":""}" ${lk?"disabled":""} onclick="Me.set('${f}',${i})" title="${esc(x.n)}"><div class="th ${x.k==="p"?"ph":""}" style="background-image:url('${x.img}')"></div>${lk?`<span class="lk">🔒</span>`:""}${esc(x.n)}${lk?`<small>דרגה ${x.req}</small>`:""}</button>`;}).join("")}</div>`;
+  $("#meBox").innerHTML=`<div class="card center"><div class="meHead">${avHTML("big")}<div style="text-align:right"><h3>${esc(meName())}</h3><p class="muted" style="margin:4px 0 0">דרגה ${L} · ${TITLES[Math.min(TITLES.length-1,L-1)]} · ${save.xp} XP</p></div></div></div>
+  <div class="card"><h3>✏️ שם משתמש</h3><div class="ctl"><input class="in" id="meName" maxlength="15" placeholder="אורח" value="${esc(me.name)}" onkeydown="if(event.key==='Enter')Me.saveName()"><button class="btn" onclick="Me.saveName()">💾 שמירה</button></div>
+  <p class="muted">עד 15 תווים. כל עוד לא בחרתם שם, יופיע "אורח".</p></div>
+  <div class="card"><h3>🖼️ תמונת משתמש</h3><p class="muted">${lockLine}</p>${grid("av")}</div>
+  <div class="card"><h3>🌄 רקע לאתר</h3><p class="muted">התמונה מופיעה מאחורי כל האתר, מוחשכת כדי שהכל יישאר קריא. בלי בחירה, האתר נשאר כמו שהוא.</p>${grid("bg")}</div>
+  <div class="card center"><p class="muted">💾 הבחירות נשמרות בדפדפן הזה בלבד, כמו ה-XP.</p><button class="btn ghost" onclick="Me.reset()">↩️ חזרה לברירת מחדל</button></div>`;},
+ saveName(){const v=$("#meName").value.replace(/\s+/g," ").trim().slice(0,15);me.name=v;saveMe();renderHeader();toast(v?"✅ השם נשמר: "+v:"השם נמחק, מעכשיו: אורח");this.render();},
+ set(f,i){const x=ME_ITEMS[i];if(x&&x.req>lvl())return;me[f]=x?x.n:"";saveMe();renderHeader();this.render();toast(f==="bg"?(x?"🌄 הרקע הוחלף":"🌄 חזרנו לרקע הרגיל"):(x?"🖼️ התמונה נשמרה":"🖼️ בלי תמונה"));},
+ reset(){if(!confirm("לחזור לעיצוב הרגיל? השם, התמונה והרקע יתאפסו. ה-XP וההישגים נשארים."))return;me={name:"",av:"",bg:""};saveMe();renderHeader();this.render();toast("↩️ חזרנו לברירת המחדל");}
+};
+
 /* ============ אודות ============ */
 /* ============ חדשות NBA ============ */
 const News={
@@ -876,15 +1012,15 @@ function renderAbout(){
   $("#aboutBox").innerHTML=`<div class="card center"><div class="big">🏀</div><h3>על האתר</h3>
   <p class="lead">זה אתר חובבים פשוט שנוצר על ידי גל, סבא שלו וקלוד.</p>
   <p>האתר נבנה מאהבה לכדורסל, בשביל כל מי שרוצה לשחק, ללמוד ולגלות דברים על ה-NBA ועל השחקנים הגדולים בהיסטוריה.</p>
-  <p class="muted">יש בו חידונים, משחקים וטבלאות סטטיסטיקה של 100 שחקנים. הסמלים והתמונות במשחק הזיהוי הם רכושם של בעליהם ומוצגים כאן לשעשוע וללמידה בלבד. האתר אינו רשמי ואין לו קשר ל-NBA או לקבוצות. הנתונים עלולים להכיל טעויות קטנות, ולכן כדאי לאמת אותם לפני שמשתמשים בהם בעבודה, למשל באתר basketball-reference.com.</p>
+  <p class="muted">יש בו חידונים, משחקים וטבלאות סטטיסטיקה של 100 שחקנים. הסמלים והתמונות במשחק הזיהוי ובעיצוב האישי הם רכושם של בעליהם ומוצגים כאן לשעשוע וללמידה בלבד. האתר אינו רשמי ואין לו קשר ל-NBA או לקבוצות. הנתונים עלולים להכיל טעויות קטנות, ולכן כדאי לאמת אותם לפני שמשתמשים בהם בעבודה, למשל באתר basketball-reference.com.</p>
   <div class="row"><button class="btn" onclick="go('home')">🏠 חזרה לדף הבית</button></div></div>`;
 }
 
 /* ============ פרופיל ============ */
 function renderProfile(){
   const l=lvl(),B=save.best;
-  const rows=[["חידון (ניקוד)",B.trivia],["נחש את הקבוצה/השחקן",B.guess],["נכון/לא נכון",B.tf],["מי זה השחקן",B.who],["גבוה/נמוך: נקודות",B.hol_pts],["גבוה/נמוך: אליפויות",B.hol_tit],["גבוה/נמוך: MVP",B.hol_mvp],["זיכרון (מהלכים, פחות=טוב)",B.mem],["ציר הזמן (מתוך 20)",B.tl],["תלייה (רצף)",B.hang],["קליעה: עונשין",B.shoot_ft],["קליעה: קשת",B.shoot_three],["קליעה: חצי מגרש",B.shoot_half]];
-  $("#profileBox").innerHTML=`<div class="card center"><div class="big">🏅</div><h3>דרגה ${l}: ${TITLES[Math.min(TITLES.length-1,l-1)]}</h3><p>${save.xp} XP · ${save.plays} משחקים</p><p class="muted">עוד ${150-(save.xp%150)} XP לדרגה הבאה</p></div>
+  const rows=[["חידון (ניקוד)",B.trivia],["נחש את הקבוצה/השחקן",B.guess],["נכון/לא נכון",B.tf],["מי זה השחקן",B.who],["גבוה/נמוך: נקודות",B.hol_pts],["גבוה/נמוך: אליפויות",B.hol_tit],["גבוה/נמוך: MVP",B.hol_mvp],["זיכרון (מהלכים, פחות=טוב)",B.mem],["ציר הזמן (מתוך 20)",B.tl],["תלייה (רצף)",B.hang],["קליעה: עונשין",B.shoot_ft],["קליעה: קשת",B.shoot_three],["קליעה: חצי מגרש",B.shoot_half],["נחש לפי הסטטיסטיקה",B.sg]];
+  $("#profileBox").innerHTML=`<div class="card center"><div class="meHead">${avHTML("big")}</div><h3>${esc(meName())} · דרגה ${l}: ${TITLES[Math.min(TITLES.length-1,l-1)]}</h3><p>${save.xp} XP · ${save.plays} משחקים</p><p class="muted">עוד ${150-(save.xp%150)} XP לדרגה הבאה</p><button class="btn ghost small" onclick="go('me')">🎨 עריכת עיצוב אישי</button></div>
   <div class="card"><h3>🏆 הישגים (${Object.keys(save.ach).length}/${ACH.length})</h3><div class="ach">${ACH.map(a=>`<div class="ac ${save.ach[a.id]?"":"lock"}"><div class="i">${a.i}</div><b>${a.n}</b><br><small>${a.d}</small></div>`).join("")}</div></div>
   <div class="card"><h3>📊 השיאים שלי</h3><table>${rows.map(r=>`<tr><td>${r[0]}</td><td><b>${r[1]===undefined?"-":r[1]}</b></td></tr>`).join("")}</table></div>
   <div class="row"><button class="btn ghost small" onclick="resetAll()">🗑️ איפוס כל ההתקדמות</button></div>`;
