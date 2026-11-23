@@ -32,7 +32,7 @@ KEYWORDS = [
 
 MAX_ITEMS = 40          # כמה כתבות לשמור לכל היותר
 MAX_AGE_DAYS = 21       # כתבות ישנות מזה נמחקות מהרשימה
-BLOCK = ["עזה","חמאס","סנאטור","בחירות","טראמפ","הפגנה","רצח","אונס","מעצר","פילאטיס"]; MAX_SUMMARY_CHARS = 320 # תקציר קצר בלבד
+BLOCK = ["עזה","חמאס","סנאטור","בחירות","טראמפ","הפגנה","רצח","תקיפה מינית","מעצר","פילאטיס"]; MAX_SUMMARY_CHARS = 320 # תקציר קצר בלבד
 
 HEB = "\u0590-\u05FF"
 # מאפשר אותיות שימוש לפני המילה (ה, ו, ב, ל, מ, ש, כ), למשל "ללייקרס" או "והסלטיקס"
@@ -137,7 +137,7 @@ def main():
             i["date"] = min(d, now).isoformat()
             i["time_ok"] = True
 
-    by_link = {i["link"]: i for i in old}
+    old = [i for i in old if is_nba(i.get("title","") + " " + i.get("summary",""))]; by_link = {i["link"]: i for i in old}
     for i in fresh:
         by_link[i["link"]] = i  # גרסה חדשה מחליפה ישנה
     cutoff = datetime.now(timezone.utc) - timedelta(days=MAX_AGE_DAYS)
