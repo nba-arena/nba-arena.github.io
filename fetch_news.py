@@ -126,7 +126,7 @@ def main():
         except Exception:
             old = []
 
-    before = json.dumps(old, ensure_ascii=False)  # צילום של המצב לפני השינויים
+    before = json.dumps(old, ensure_ascii=False); old = [i for i in old if is_nba(i.get("title","") + " " + i.get("summary",""))]  # צילום של המצב לפני השינויים
 
     # תיקון חד-פעמי לכתבות שנשמרו לפני תיקון השעה
     fixes = {f["name"]: f.get("fix_hours", 0) for f in FEEDS}
