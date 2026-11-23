@@ -151,7 +151,7 @@ table.st{min-width:680px}
 .nw p{margin:0 0 10px;color:var(--mut);line-height:1.6}
 .nwMeta{font-size:.85rem;color:var(--mut);margin-bottom:8px}
 .nwGo{color:var(--ac2);font-weight:700;text-decoration:none}
-.nwGo:hover{text-decoration:underline}
+.nwGo:hover{text-decoration:underline} .nwPic{width:110px;height:74px;flex-shrink:0;border-radius:10px;background:#fff;display:grid;place-items:center;padding:8px;overflow:hidden} .nwPic img{max-width:100%;max-height:100%;display:block} .nwPic.gen{background:linear-gradient(135deg,#1d2a5a,#0e1430);font-size:2rem;padding:0}
 @media(max-width:560px){.nw{flex-direction:column}.nw img{width:100%;height:160px}}
 
 /* --- עיצוב אישי --- */
@@ -991,8 +991,8 @@ const News={
   this.d=d;this.shown=this.PAGE;this.draw();
  },
  card(i){
-  const safe=u=>/^https:\/\//.test(u||"")?u:"";
-  return `<article class="nw"><div>
+  const safe=u=>/^https:\/\//.test(u||"")?u:""; const ALL=Object.fromEntries([...GUESS_TEAMS,...EXTRA_TEAMS]); const T=[["בולס","שיקגו בולס"],["לייקרס","לוס אנג'לס לייקרס"],["סלטיקס","בוסטון סלטיקס"],["ראפטורס","טורונטו ראפטורס"],["ספרס","סן אנטוניו ספרס"],["היט","מיאמי היט"],["נאגטס","דנבר נאגטס"],["ווריורס","גולדן סטייט ווריורס"],["גולדן סטייט","גולדן סטייט ווריורס"],["ניקס","ניו יורק ניקס"],["מאבריקס","דאלאס מאבריקס"],["רוקטס","יוסטון רוקטס"],["ת'אנדר","אוקלהומה סיטי ת'אנדר"],["בלייזרס","פורטלנד טרייל בלייזרס"],["נטס","ברוקלין נטס"],["באקס","מילווקי באקס"]]; const f=T.find(x=>(i.title||"").indexOf(x[0])>-1); const pic=f&&ALL[f[1]]?`<div class="nwPic"><img src="${this.esc(ALL[f[1]])}" alt="" loading="lazy"></div>`:`<div class="nwPic gen">🏀</div>`;
+  return `<article class="nw">${pic}<div>
    <h3>${this.esc(i.title)}</h3>
    <div class="nwMeta">${this.esc(i.source)} · ${this.ago(i.date)}</div>
    ${i.summary?`<p>${this.esc(i.summary)}</p>`:""}
