@@ -992,7 +992,7 @@ const News={
  },
  card(i){
   const safe=u=>/^https:\/\//.test(u||"")?u:"";
-  return `<article class="nw">${safe(i.image)?`<img src="${this.esc(safe(i.image))}" alt="" loading="lazy" onerror="this.remove()">`:""}<div>
+  return `<article class="nw"><div>
    <h3>${this.esc(i.title)}</h3>
    <div class="nwMeta">${this.esc(i.source)} · ${this.ago(i.date)}</div>
    ${i.summary?`<p>${this.esc(i.summary)}</p>`:""}
@@ -1012,7 +1012,7 @@ function renderAbout(){
   $("#aboutBox").innerHTML=`<div class="card center"><div class="big">🏀</div><h3>על האתר</h3>
   <p class="lead">זה אתר חובבים פשוט שנוצר על ידי גל, סבא שלו וקלוד.</p>
   <p>האתר נבנה מאהבה לכדורסל, בשביל כל מי שרוצה לשחק, ללמוד ולגלות דברים על ה-NBA ועל השחקנים הגדולים בהיסטוריה.</p>
-  <p class="muted">יש בו חידונים, משחקים וטבלאות סטטיסטיקה של 100 שחקנים. הסמלים והתמונות במשחק הזיהוי ובעיצוב האישי הם רכושם של בעליהם ומוצגים כאן לשעשוע וללמידה בלבד. האתר אינו רשמי ואין לו קשר ל-NBA או לקבוצות. הנתונים עלולים להכיל טעויות קטנות, ולכן כדאי לאמת אותם לפני שמשתמשים בהם בעבודה, למשל באתר basketball-reference.com.</p>
+  <p class="muted">יש בו חידונים, משחקים וטבלאות סטטיסטיקה של 100 שחקנים. הסמלים והתמונות במשחק הזיהוי ובעיצוב האישי הם רכושם של בעליהם ומוצגים כאן לשעשוע וללמידה בלבד. האתר אינו רשמי ואין לו קשר ל-NBA או לקבוצות. הנתונים עלולים להכיל טעויות קטנות, ולכן כדאי לאמת אותם לפני שמשתמשים בהם בעבודה, למשל באתר basketball-reference.com.</p><p class="muted">בעלי זכויות שמעוניינים שנסיר תוכן שלהם מהאתר מוזמנים לכתוב לנו, ונסיר אותו מיד: <a class="nwGo" href="mailto:${["nbaarena","il"].join(".")+String.fromCharCode(64)+["gmail","com"].join(".")}">✉️ ${["nbaarena","il"].join(".")+String.fromCharCode(64)+["gmail","com"].join(".")}</a></p>
   <div class="row"><button class="btn" onclick="go('home')">🏠 חזרה לדף הבית</button></div></div>`;
 }
 
