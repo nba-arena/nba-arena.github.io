@@ -263,7 +263,7 @@ const ACH=[
 function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;$("#toasts").appendChild(t);setTimeout(()=>t.remove(),2600);}
 function renderHeader(){const l=lvl();$("#hdrAv").innerHTML=avHTML();$("#hdrName").textContent=meName();applyBg();$("#lvl").innerHTML="דרגה "+l+'<span class="lvT"> · '+TITLES[Math.min(TITLES.length-1,l-1)]+"</span>";$("#xpTxt").textContent=save.xp+" XP";$("#xpFill").style.width=((save.xp%150)/150*100)+"%";}
 function unlock(id){if(save.ach[id])return;save.ach[id]=1;persist();const a=ACH.find(x=>x.id===id);toast("🏆 הישג חדש: "+a.n);}
-function addXP(n){if(n<=0)return;const before=lvl();save.xp+=n;persist();renderHeader();toast("+"+n+" XP");if(lvl()>=5)unlock("lvl5");
+function addXP(n){if(n<=0)return;const before=lvl();save.xp+=n;persist();renderHeader(); (function(){var s=document.createElement("script");s.async=true;s.src="//gc.zgo.at/count.js";s.setAttribute("data-goatcounter","https://nba-arena.goatcounter.com/count");document.body.appendChild(s);})();toast("+"+n+" XP");if(lvl()>=5)unlock("lvl5");
  const now=lvl();if(now>before){toast("⬆️ עליתם לדרגה "+now+"!");if(ME_ITEMS.some(x=>x.req>before&&x.req<=now))toast("🎨 נפתחו תמונות ורקעים חדשים בעיצוב אישי!");}}
 function setBest(k,v,low){const o=save.best[k];if(o===undefined||(low?v<o:v>o)){save.best[k]=v;persist();return true;}return false;}
 function finish(xp){save.plays++;unlock("first");if(save.plays>=10)unlock("plays10");persist();addXP(xp);}
@@ -965,9 +965,9 @@ const Me={
   <div class="card"><h3>🖼️ תמונת משתמש</h3><p class="muted">${lockLine}</p>${grid("av")}</div>
   <div class="card"><h3>🌄 רקע לאתר</h3><p class="muted">התמונה מופיעה מאחורי כל האתר, מוחשכת כדי שהכל יישאר קריא. בלי בחירה, האתר נשאר כמו שהוא.</p>${grid("bg")}</div>
   <div class="card center"><p class="muted">💾 הבחירות נשמרות בדפדפן הזה בלבד, כמו ה-XP.</p><button class="btn ghost" onclick="Me.reset()">↩️ חזרה לברירת מחדל</button></div>`;},
- saveName(){const v=$("#meName").value.replace(/\s+/g," ").trim().slice(0,15);me.name=v;saveMe();renderHeader();toast(v?"✅ השם נשמר: "+v:"השם נמחק, מעכשיו: אורח");this.render();},
- set(f,i){const x=ME_ITEMS[i];if(x&&x.req>lvl())return;me[f]=x?x.n:"";saveMe();renderHeader();this.render();toast(f==="bg"?(x?"🌄 הרקע הוחלף":"🌄 חזרנו לרקע הרגיל"):(x?"🖼️ התמונה נשמרה":"🖼️ בלי תמונה"));},
- reset(){if(!confirm("לחזור לעיצוב הרגיל? השם, התמונה והרקע יתאפסו. ה-XP וההישגים נשארים."))return;me={name:"",av:"",bg:""};saveMe();renderHeader();this.render();toast("↩️ חזרנו לברירת המחדל");}
+ saveName(){const v=$("#meName").value.replace(/\s+/g," ").trim().slice(0,15);me.name=v;saveMe();renderHeader(); (function(){var s=document.createElement("script");s.async=true;s.src="//gc.zgo.at/count.js";s.setAttribute("data-goatcounter","https://nba-arena.goatcounter.com/count");document.body.appendChild(s);})();toast(v?"✅ השם נשמר: "+v:"השם נמחק, מעכשיו: אורח");this.render();},
+ set(f,i){const x=ME_ITEMS[i];if(x&&x.req>lvl())return;me[f]=x?x.n:"";saveMe();renderHeader(); (function(){var s=document.createElement("script");s.async=true;s.src="//gc.zgo.at/count.js";s.setAttribute("data-goatcounter","https://nba-arena.goatcounter.com/count");document.body.appendChild(s);})();this.render();toast(f==="bg"?(x?"🌄 הרקע הוחלף":"🌄 חזרנו לרקע הרגיל"):(x?"🖼️ התמונה נשמרה":"🖼️ בלי תמונה"));},
+ reset(){if(!confirm("לחזור לעיצוב הרגיל? השם, התמונה והרקע יתאפסו. ה-XP וההישגים נשארים."))return;me={name:"",av:"",bg:""};saveMe();renderHeader(); (function(){var s=document.createElement("script");s.async=true;s.src="//gc.zgo.at/count.js";s.setAttribute("data-goatcounter","https://nba-arena.goatcounter.com/count");document.body.appendChild(s);})();this.render();toast("↩️ חזרנו לברירת המחדל");}
 };
 
 /* ============ אודות ============ */
@@ -1025,10 +1025,10 @@ function renderProfile(){
   <div class="card"><h3>📊 השיאים שלי</h3><table>${rows.map(r=>`<tr><td>${r[0]}</td><td><b>${r[1]===undefined?"-":r[1]}</b></td></tr>`).join("")}</table></div>
   <div class="row"><button class="btn ghost small" onclick="resetAll()">🗑️ איפוס כל ההתקדמות</button></div>`;
 }
-function resetAll(){if(confirm("בטוחים? כל ה-XP, השיאים וההישגים יימחקו.")){save={xp:0,best:{},ach:{},plays:0};persist();renderHeader();renderProfile();}}
+function resetAll(){if(confirm("בטוחים? כל ה-XP, השיאים וההישגים יימחקו.")){save={xp:0,best:{},ach:{},plays:0};persist();renderHeader(); (function(){var s=document.createElement("script");s.async=true;s.src="//gc.zgo.at/count.js";s.setAttribute("data-goatcounter","https://nba-arena.goatcounter.com/count");document.body.appendChild(s);})();renderProfile();}}
 
 /* ============ הפעלה ============ */
-renderHeader();
+renderHeader(); (function(){var s=document.createElement("script");s.async=true;s.src="//gc.zgo.at/count.js";s.setAttribute("data-goatcounter","https://nba-arena.goatcounter.com/count");document.body.appendChild(s);})();
 go("home");
 </script>
 </body>
